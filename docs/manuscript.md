@@ -531,7 +531,7 @@ and agreed to the published version of the manuscript.
 
 ## Funding
 
-This research received no external funding.
+This research was funded by the Natural Science Foundation of Henan Province, China, grant number 262300422542.
 
 ## Institutional Review Board Statement
 
