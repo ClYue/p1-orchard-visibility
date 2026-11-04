@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+*.log
+_backup*/
+*备份*
+figures_viz/
+.vscode/
+.idea/

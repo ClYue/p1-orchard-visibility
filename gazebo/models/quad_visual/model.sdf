@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<sdf version="1.8">
+  <model name="quad_visual">
+    <static>true</static>
+    <link name="body">
+      <collision name="col">
+        <geometry><box><size>0.28 0.28 0.07</size></box></geometry>
+      </collision>
+      <visual name="body_vis">
+        <geometry><box><size>0.28 0.28 0.07</size></box></geometry>
+        <material><ambient>0.85 0.86 0.88 1</ambient><diffuse>0.92 0.93 0.95 1</diffuse></material>
+      </visual>
+      <!-- 四个旋翼盘 -->
+      <visual name="rotor_fl">
+        <pose>0.16 0.16 0.03 0 0 0</pose>
+        <geometry><cylinder><radius>0.13</radius><length>0.012</length></cylinder></geometry>
+        <material><ambient>0.12 0.12 0.14 1</ambient><diffuse>0.18 0.18 0.20 1</diffuse></material>
+      </visual>
+      <visual name="rotor_fr">
+        <pose>0.16 -0.16 0.03 0 0 0</pose>
+        <geometry><cylinder><radius>0.13</radius><length>0.012</length></cylinder></geometry>
+        <material><ambient>0.12 0.12 0.14 1</ambient><diffuse>0.18 0.18 0.20 1</diffuse></material>
+      </visual>
+      <visual name="rotor_rl">
+        <pose>-0.16 0.16 0.03 0 0 0</pose>
+        <geometry><cylinder><radius>0.13</radius><length>0.012</length></cylinder></geometry>
+        <material><ambient>0.12 0.12 0.14 1</ambient><diffuse>0.18 0.18 0.20 1</diffuse></material>
+      </visual>
+      <visual name="rotor_rr">
+        <pose>-0.16 -0.16 0.03 0 0 0</pose>
+        <geometry><cylinder><radius>0.13</radius><length>0.012</length></cylinder></geometry>
+        <material><ambient>0.12 0.12 0.14 1</ambient><diffuse>0.18 0.18 0.20 1</diffuse></material>
+      </visual>
+      <!-- 下视相机外壳 -->
+      <visual name="gimbal_vis">
+        <pose>0.04 0 -0.06 0 0 0</pose>
+        <geometry><sphere><radius>0.045</radius></sphere></geometry>
+        <material><ambient>0.25 0.28 0.32 1</ambient><diffuse>0.35 0.38 0.42 1</diffuse></material>
+      </visual>
+      <!-- 机臂（用细长方体示意，绕 Z 旋转 45 度对齐旋翼） -->
+      <visual name="arm1">
+        <pose>0 0 0 0 0 0.7854</pose>
+        <geometry><box><size>0.46 0.03 0.02</size></box></geometry>
+        <material><ambient>0.2 0.2 0.22 1</ambient><diffuse>0.28 0.28 0.3 1</diffuse></material>
+      </visual>
+      <visual name="arm2">
+        <pose>0 0 0 0 0 -0.7854</pose>
+        <geometry><box><size>0.46 0.03 0.02</size></box></geometry>
+        <material><ambient>0.2 0.2 0.22 1</ambient><diffuse>0.28 0.28 0.3 1</diffuse></material>
+      </visual>
+    </link>
+  </model>
+</sdf>
