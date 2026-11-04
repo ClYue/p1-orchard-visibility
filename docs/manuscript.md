@@ -3,7 +3,7 @@
 **Chunlong Yue ¹\*, Qian Li ¹, Junyi Zhang ¹, Kaikai Zhou ¹ and Bo Peng ¹**
 
 ¹ College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou 450046, China
-\* Correspondence: edwardyue2011@gmail.com
+\* Correspondence: edwardyue2011@gmail.com; ORCID: 0009-0009-1272-7294
 
 **Abstract:** UAV-assisted localization is a promising fallback for ground robots in GNSS-denied orchards, yet where the UAV should stand is usually decided by geometry alone, while marker visibility through the canopy is either ignored or modeled as isotropic. We show that these requirements conflict whenever the markers sit near a canopy face — a mounting decision rather than a property of the orchard — and resolve it with a calibrated, direction-dependent visibility model. Ray-casting calibration against a parameterized hedgerow orchard shows that, for markers on the alley centerline, the along-row sight line is never attenuated, whereas across-row visibility collapses beyond 2.5 m; the conventional product-Gaussian model is shape-mismatched (fitted amplitude > 1, negative R²). Embedded in a one-step-lookahead planner whose cost couples the predicted heading and position standard deviations, the calibrated field yields, over 15 seeds, 0.32° heading and 0.017 m position RMSE with 99 m of flight, against 0.51°, 0.025 m and 185 m for the best station-tuned baseline. Covariance-intersection fusion keeps the NEES exceedance at 0.6% and 0.5%, versus 7.1% and 6.2% for naive fusion, and heading stays within 0.32-0.38° under 0-50% packet loss.
 

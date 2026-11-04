@@ -77,4 +77,4 @@ MIT — see `LICENSE`.
 
 ## Contact
 
-Chunlong Yue — edwardyue2011@gmail.com
+Chunlong Yue — edwardyue2011@gmail.com — ORCID: [0009-0009-1272-7294](https://orcid.org/0009-0009-1272-7294)
