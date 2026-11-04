@@ -1,4 +1,4 @@
-# Where to Look Matters More Than How Often: Visibility-Calibrated Observation Positioning for UAV-Assisted Ground Localization in Orchards
+# Where to Look Outweighs Frequency: Visibility-Calibrated Viewpoint Selection for Orchard UAV Ground Localization
 
 **Chunlong Yue ¹\*, Qian Li ¹, Junyi Zhang ¹, Kaikai Zhou ¹ and Bo Peng ¹**
 
@@ -7,7 +7,7 @@
 
 **Abstract:** UAV-assisted localization is a promising fallback for ground robots in GNSS-denied orchards. Yet the UAV's station is usually chosen by geometry alone, and marker visibility through the canopy is ignored or modeled as isotropic. We show that these two requirements conflict when the markers sit near a canopy face. This is a mounting decision, not a property of the orchard. We resolve it with a calibrated, direction-dependent visibility model. Ray-casting calibration in a parameterized hedgerow orchard shows that the along-row sight line is never attenuated for markers on the alley centerline, whereas across-row visibility collapses beyond 2.5 m. The conventional product-Gaussian model is shape-mismatched, with fitted amplitudes above unity and negative R². We embed the calibrated field in a one-step-lookahead planner whose cost couples the predicted heading and position standard deviations. Over 15 seeds, it yields 0.32° heading and 0.017 m position RMSE with 99 m of flight, against 0.51°, 0.025 m and 185 m for the best station-tuned baseline. Covariance-intersection fusion keeps the NEES exceedance at 0.6% and 0.5%, versus 7.1% and 6.2% for naive fusion. Heading stays within 0.32-0.38° under 0-50% packet loss.
 
-**Keywords:** UAV-UGV cooperative localization; GNSS-denied orchard; observation positioning; visibility calibration; heading identifiability; covariance intersection
+**Keywords:** UAV-UGV cooperative localization; GNSS-denied orchard; viewpoint selection; visibility calibration; heading identifiability; covariance intersection
 
 **Highlights:**
 - Along-row visibility of alley-centre markers is never attenuated in hedgerows.
@@ -212,7 +212,7 @@ with $\mathbf{H}$ linearised at the *predicted* state rather than at ground trut
 The position term is not decoration. Minimising heading variance alone drives the UAV toward stations that are geometrically favourable but poorly visible: the heading-only variant has a mean per-step visibility of 0.31. Position and heading errors are coupled through the off-diagonal blocks of $\mathbf{P}_f$, so degrading position degrades heading as well. Adding the position term with $\kappa=0.2$ returns the vehicle to well-visible short-range stations (mean visibility 0.99 in the open alley and 0.84 with the markers at the canopy edge) and improves *both* components; the ablation is reported in §3.4. Algorithm 1 summarises the procedure.
 
 ```
-Algorithm 1  Identifiability-driven observation positioning (one-step lookahead)
+Algorithm 1  Identifiability-driven viewpoint selection (one-step lookahead)
 Input : estimate x̂, covariance P, current UAV position u_k, weights κ, w
 Output: next observation station u*
 1  x̂⁺, P⁺ ← EKF predict(x̂, P, odometry, gyro)

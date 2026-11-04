@@ -2,7 +2,7 @@
 
 Code, calibrated visibility tables, and Gazebo assets accompanying the manuscript:
 
-> **Where to Look Matters More Than How Often: Visibility-Calibrated Observation Positioning for UAV-Assisted Ground Localization in Orchards**
+> **Where to Look Outweighs Frequency: Visibility-Calibrated Viewpoint Selection for Orchard UAV Ground Localization**
 > Chunlong Yue, Qian Li, Junyi Zhang, Kaikai Zhou, Bo Peng
 > College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou, China
 
