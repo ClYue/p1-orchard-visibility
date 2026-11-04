@@ -1,5 +1,10 @@
 # Where to Look Matters More Than How Often: Visibility-Calibrated Observation Positioning for UAV-Assisted Ground Localization in Orchards
 
+**Chunlong Yue ¹\*, Qian Li ¹, Junyi Zhang ¹, Kaikai Zhou ¹ and Bo Peng ¹**
+
+¹ College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou 450046, China
+\* Correspondence: edwardyue2011@gmail.com
+
 **Abstract:** UAV-assisted localization is a promising fallback for ground robots in GNSS-denied orchards, yet where the UAV should stand is usually decided by geometry alone, while marker visibility through the canopy is either ignored or modeled as isotropic. We show that these requirements conflict whenever the markers sit near a canopy face — a mounting decision rather than a property of the orchard — and resolve it with a calibrated, direction-dependent visibility model. Ray-casting calibration against a parameterized hedgerow orchard shows that, for markers on the alley centerline, the along-row sight line is never attenuated, whereas across-row visibility collapses beyond 2.5 m; the conventional product-Gaussian model is shape-mismatched (fitted amplitude > 1, negative R²). Embedded in a one-step-lookahead planner whose cost couples the predicted heading and position standard deviations, the calibrated field yields, over 15 seeds, 0.32° heading and 0.017 m position RMSE with 99 m of flight, against 0.51°, 0.025 m and 185 m for the best station-tuned baseline. Covariance-intersection fusion keeps the NEES exceedance at 0.6% and 0.5%, versus 7.1% and 6.2% for naive fusion, and heading stays within 0.32-0.38° under 0-50% packet loss.
 
 **Keywords:** UAV-UGV cooperative localization; GNSS-denied orchard; observation positioning; visibility calibration; heading identifiability; covariance intersection
@@ -513,14 +518,16 @@ supplementary material.
 
 ## Data Availability Statement
 
-The simulation code, the calibrated visibility lookup table (`vis_lut.npz`) and all figure-generation scripts are
-available from the corresponding author on reasonable request.
+The simulation code, the calibrated visibility lookup table (`vis_lut.npz`), the Gazebo world and all
+figure-generation scripts are openly available at https://github.com/ClYue/p1-orchard-visibility
+(accessed on 4 November 2026).
 
 ## Author Contributions
 
-Conceptualization, C.Y.; methodology, C.Y.; software, C.Y.; validation, C.Y.; formal analysis, C.Y.; investigation,
-C.Y.; writing—original draft preparation, C.Y.; writing—review and editing, C.Y.; visualization, C.Y.; supervision,
-C.Y.; funding acquisition, C.Y. The author has read and agreed to the published version of the manuscript.
+Conceptualization, C.Y.; methodology, C.Y.; software, C.Y. and J.Z.; validation, Q.L. and B.P.; formal analysis,
+C.Y. and K.Z.; investigation, Q.L.; data curation, K.Z.; writing—original draft preparation, C.Y.; writing—review
+and editing, Q.L. and B.P.; visualization, J.Z.; supervision, C.Y.; funding acquisition, C.Y. All authors have read
+and agreed to the published version of the manuscript.
 
 ## Funding
 
@@ -536,8 +543,8 @@ Not applicable.
 
 ## Acknowledgments
 
-During the preparation of this manuscript, the author used a large-language-model assistant for drafting and
-language editing. The author reviewed and edited the output and takes full responsibility for the content of this
+During the preparation of this manuscript, the authors used a large-language-model assistant for drafting and
+language editing. The authors reviewed and edited the output and take full responsibility for the content of this
 publication.
 
 ## Conflicts of Interest
