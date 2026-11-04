@@ -204,7 +204,11 @@ def run(name, seed, p_loss=0.0, record=False):
                 u = u + mv; dist += float(np.linalg.norm(mv))
         rel = u - xt[:2]; nr = float(np.linalg.norm(rel))
         if nr > CFG["uav_rmax"]:
-            u = xt[:2] + rel / nr * CFG["uav_rmax"]
+            # 2026-11-05 修正：回拉位移此前未计入 dist，导致悬停策略航程记为 0，
+            # 而实际发生了数十米位移。航程应包含所有实际施加的位移。
+            u_new = xt[:2] + rel / nr * CFG["uav_rmax"]
+            dist += float(np.linalg.norm(u_new - u))
+            u = u_new
 
         # EKF 预测
         v_m = v * (1.0 + CFG["v_noise"] * rng.standard_normal())
@@ -285,7 +289,10 @@ def run_metrics(name, seed, p_loss=0.0):
                 u = u + mv; dist += float(np.linalg.norm(mv))
         rel = u - xt[:2]; nr = float(np.linalg.norm(rel))
         if nr > CFG["uav_rmax"]:
-            u = xt[:2] + rel / nr * CFG["uav_rmax"]
+            # 同上：约束回拉的位移计入航程
+            u_new = xt[:2] + rel / nr * CFG["uav_rmax"]
+            dist += float(np.linalg.norm(u_new - u))
+            u = u_new
 
         v_m = v * (1.0 + CFG["v_noise"] * rng.standard_normal())
         w_m = w + b_true + CFG["gyro_noise"] * rng.standard_normal()

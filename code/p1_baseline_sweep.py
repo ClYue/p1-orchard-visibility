@@ -18,7 +18,10 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import p1_sim as S  # noqa: E402
 
-R_LIST = [5.0, 8.0, 10.0, 12.0, 15.0, 20.0]
+# 站距扫描集合必须覆盖规划器的候选范围（p1_sim.RAD 最小 2.0 m），
+# 否则固定基线被限制在更大的站距上，对比不公平。
+# 2026-11-05 修正：原为 [5,8,10,12,15,20]，最小 5 m。
+R_LIST = [2.0, 3.0, 4.5, 5.0, 6.5, 8.0, 9.0, 10.0, 12.0, 15.0, 20.0]
 
 
 def eval_pol(key, seeds):
@@ -33,6 +36,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, default=15)
     args = ap.parse_args()
+
+    # 必须与论文推荐配置一致（κ=0.2, w=0.004），否则 "ours" 会在
+    # w_pos=0 的默认值下运行，结果与论文表 4 不可比（实测 0.78° vs 0.34°）。
+    S.CFG["w_pos"] = 0.2
+    S.CFG["w_move"] = 0.004
 
     lut = os.path.normpath(os.path.join(S.OUT, "..", "..", "08_Gazebo仿真", "vis_lut.npz"))
     out = {}
