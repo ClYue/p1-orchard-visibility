@@ -183,7 +183,7 @@ Conceptualization, C.Y.; methodology, C.Y.; software, C.Y. and J.Z.; validation,
 
 ## Funding
 
-This research was funded by the Natural Science Foundation of Henan Province, China, grant number 262300422542.
+This research was funded by the Natural Science Foundation of Henan Province, China (grant number 262300422542, "Multimodal perception and cooperative control of ground–air heterogeneous robots in dynamic farmland environments") and the Science and Technology Research Project of Henan Province (grant number 222102220109).
 
 ## Institutional Review Board Statement
 
