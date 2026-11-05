@@ -85,9 +85,7 @@ Two consequences follow for station selection. First, the assumption that the mo
 The adaptive policy replans at 1 Hz. It places 120 requested stations on 20 azimuths and six radii (2, 3, 4.5, 6.5, 9 and 12 m) about the estimated ground position. Each request is projected to the position the UAV could reach in one second at 3 m/s. The current position is also a candidate. The policy scores these reachable locations using the current state and covariance, without propagating a future ground trajectory. At each candidate it forms the conditional covariance $P^+$ of a paired update from the local bearing Jacobian and measurement noise. With pair probability $p$, the expected covariance for the two possible outcomes is $\bar P=(1-p)P+pP^+$. The score is
 
 $$
-\sqrt{\bar P_{\theta\theta}}
-+0.2\sqrt{\bar P_{xx}+\bar P_{yy}}
-+w\lVert u_{\rm candidate}-u_{\rm current}\rVert.
+\sqrt{\bar P_{\theta\theta}} + 0.2\sqrt{\bar P_{xx}+\bar P_{yy}} + w\,\|u_{\mathrm{candidate}}-u_{\mathrm{current}}\|
 $$
 
 The coefficient 0.2 weights horizontal position uncertainty relative to heading uncertainty. It was held constant. Each prior uses the same four motion weights $w\in\{0,0.00025,0.001,0.004\}$. These are sensitivity settings, and the simulated flight distance is an outcome rather than a hard budget.
