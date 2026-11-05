@@ -197,7 +197,7 @@ Not applicable.
 
 ## Acknowledgments
 
-The authors used OpenAI Codex for assistance with code revision, numerical checks, and manuscript drafting.
+The authors used OpenAI Codex for code revision, numerical checks and drafting of the simulation code, and WorkBuddy for manuscript review, cross-checking of the reported values against the simulation outputs, and language editing. All AI-assisted output was reviewed and verified against the simulation results by the authors, who take full responsibility for the content of this publication.
 
 ## Conflicts of Interest
 
