@@ -10,3 +10,7 @@ figures_viz/
 .vscode/
 .idea/
 _backup_*
+
+# 第三方论文全文与临时脚本不入库
+_ref_*.txt
+_run_*.py
