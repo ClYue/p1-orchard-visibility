@@ -13,13 +13,14 @@
 
 *What are the main findings?*
 
-- The ray-based lookup table improved adaptive localization near the canopy edge relative to Gaussian and uniform priors at the same motion weight.
-- A tuned 2 m fixed station remained competitive. The shorter lookup-table flight at the edge increased both localization errors.
+- A 1 m lateral path offset makes canopy visibility strongly asymmetric.
+- At the edge, azimuth changes heading error 15.6-fold at fixed range.
 
 *What are the implications of the main findings?*
 
-- Fixed-station comparisons should vary both azimuth and distance under shared flight and observation constraints.
-- The value of adapting the viewpoint depends on canopy geometry and the accuracy required for the ground task.
+- Distance-decay visibility priors cannot represent near-side occlusion.
+- Tuned 2 m fixed stations stay competitive; adaptivity mainly saves flight.
+- Whether adaptivity pays depends on canopy geometry and tolerance.
 
 ## 1. Introduction
 
@@ -93,7 +94,7 @@ The fixed-station family uses the same six requested radii and eight relative az
 
 ### 2.5. Evaluation and reproducibility
 
-Each 50 s trial uses $x(t)=0.6t$ and $y(t)=y_0+0.22\sin(2\pi t/18)$ m. The two cases use $y_0=0$ m and $y_0=1$ m, respectively. Speed and heading are derived from the discretized path. Observations are attempted at 5 Hz. Wheel-speed noise is 3% of speed and gyro noise is 0.01 rad/s. Initial bias is drawn with standard deviation 0.01 rad/s and changes by a random walk of standard deviation $2\times10^{-5}$ rad/s per step. Initial EKF errors have standard deviations 0.20 m in each horizontal coordinate, 0.02 rad in heading, and 0.01 rad/s in bias. Every trial starts the UAV 2 m behind the ground robot's nominal initial position.
+Each 50 s trial uses $x(t)=0.6t$ and $y(t)=y_0+0.22\sin(2\pi t/18)$ m. The two cases use $y_0=0$ m and $y_0=1$ m, respectively. The 50 s horizon corresponds to 30 m of travel, one bay of a commercial hedgerow orchard; a 150 s repeat is included in the supplementary material, where the ordering of policies is unchanged and the adaptive penalty grows. Speed and heading are derived from the discretized path. Observations are attempted at 5 Hz. Wheel-speed noise is 3% of speed and gyro noise is 0.01 rad/s. Initial bias is drawn with standard deviation 0.01 rad/s and changes by a random walk of standard deviation $2\times10^{-5}$ rad/s per step. Initial EKF errors have standard deviations 0.20 m in each horizontal coordinate, 0.02 rad in heading, and 0.01 rad/s in bias. Every trial starts the UAV 2 m behind the ground robot's nominal initial position.
 
 Each case uses 30 held-out layout and noise seeds. Every policy shares the same layout, odometry noise, potential bearing noise and detection draw within each seed. We evaluated 48 fixed stations and 12 adaptive configurations per case. The principal outcomes are the per-trial RMSE of wrapped heading and two-dimensional position, total horizontal flight distance, and fraction of attempts yielding a pair. Reported means give equal weight to each seed. Exploratory 95% intervals for differences use 5,000 paired bootstrap resamples of the seeds. They are conditional on the selected configurations. The best-heading fixed configuration is selected descriptively from the sweep in each case.
 
@@ -160,7 +161,7 @@ The simulation identifies two separate design choices: whether to adapt the view
 
 The fixed-station sweep explains why the adaptive policy's value changes with the reference strategy. Close axial viewing is competitive near the center. Near the canopy, a close oblique station improves the chance of obtaining the marker pair. This change is available to a designer who knows which corridor the ground vehicle will follow. In the edge case, using the shorter adaptive flight trades away measurable heading and position accuracy. Whether that is acceptable depends on the ground task's tolerances. The present study evaluates localization error and travel distance, and task completion and battery use require separate measurements.
 
-Three rules follow for a designer, and they are stated in terms of what the mission already knows rather than in terms of the model. If the vehicle stays within roughly half a metre of the alley centerline, a station 2 m behind it along the row is within 0.04° of the best azimuth available at that distance, and no visibility prior is needed; the geometric criterion is sufficient because the canopy leaves the axial corridor open. If the vehicle drifts toward one row—which is what a row-following controller does under cross-slope, planting irregularity or a lateral offset in the taught path—the usable directions collapse onto the side away from the near row, and the station has to be chosen by direction rather than by distance. If the ground path is not known at design time, the field has to be carried onboard, because the same 2 m offset that is optimal on one path is nearly blind on the other: the azimuth that is best at the edge is 0.569° better than the axial station, and the azimuth that fails at the edge is 8.2° worse.
+Three rules follow for a designer, and they are stated in terms of what the mission already knows rather than in terms of the model. If the vehicle stays within about half a metre of the alley centerline, a station 2 m behind it along the row is within 0.04° of the best azimuth at that distance. No visibility prior is needed there, because the canopy leaves the axial corridor open. If the vehicle drifts toward one row—which is what a row-following controller does under cross-slope, planting irregularity or a lateral offset in the taught path—the usable directions collapse onto the side away from the near row, and the station has to be chosen by direction rather than by distance. If the ground path is not known at design time, the field has to be carried onboard. The same 2 m offset that is optimal on one path is blind on the other: the best azimuth at the edge is 0.569° better than the axial station, and the worst is 8.2° worse.
 
 These results bear on how observability-aware planning treats occlusion. In that literature occlusion typically enters as a constraint on a trajectory whose objective is conditioning [5,6], so a candidate is rejected if the line of sight is blocked and otherwise ranked by predicted covariance. The present comparison suggests that in a hedgerow orchard the constraint can dominate the objective. At the edge, two stations at the same 2 m distance, 225° and 315°, are both feasible—the pair detection fractions are 0.868 and 0.860—yet they differ by 0.249° in heading error, and neither is distinguishable from the other by a geometric criterion alone, because the marker baseline subtends a similar angle from both. A feasibility filter would admit both and rank them by covariance, which is nearly tied; the visibility field is what separates them. Treating occlusion as a binary constraint therefore discards the information that matters most in exactly the configuration where station choice is hardest.
 

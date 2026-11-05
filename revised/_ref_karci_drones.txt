@@ -1,0 +1,905 @@
+Article
+Improvement of Cooperative Localization for Heterogeneous
+Mobile Robots
+EfeOg˘uzhanKarcı* ,AhmetMustafaKangal andSinanÖncü
+MechanicalEngineeringDepartment,Bog˘aziçiUniversity,Istanbul34342,Turkey;
+ahmetmustafakangal@gmail.com(A.M.K.);sinan.oncu@boun.edu.tr(S.Ö.)
+* Correspondence:oguzhankarci94@gmail.com;Tel.:+90-542-469-4096
+Abstract
+This research focuses on enhancing cooperative localization for heterogeneous mobile
+robotscomposedofaquadcopterandanunmannedgroundvehicle. Thestudyemploys
+sensorfusiontechniques,particularlytheExtendedKalmanFilter,tofusedatafromvarious
+sensors,includingGPSs,IMUs,andcameras. Byintegratingthesesensorsandoptimizing
+fusionstrategies,theresearchaimstoimprovetheprecisionandreliabilityofcooperative
+localizationincomplexanddynamicenvironments. Theprimaryobjectiveistodevelopa
+practicalframeworkforcooperativelocalizationthataddressesthechallengesposedbythe
+differencesinmobilityandsensingcapabilitiesamongheterogeneousrobots. Sensorfusion
+isusedtocompensateforthelimitationsofindividualsensors,providingmoreaccurate
+and robust localization results. Moreover, a comparative analysis of different sensor
+combinationsandfusionstrategieshelpstoidentifytheoptimalconfigurationforeach
+robot. Thisresearchfocusesontheimprovementofcooperativelocalization,pathplanning,
+andcollaborativetasksforheterogeneousrobots. Thefindingshavebroadapplicationsin
+fieldssuchasautonomoustransportation,agriculturaloperation,anddisasterresponse,
+wherethecooperationofdiverseroboticplatformsiscrucialformissionsuccess.
+Keywords: cooperativelocalization;heterogeneousmobilerobots;ExtendedKalmanFilter;
+sensorfusion
+AcademicEditor:YushuYu 1. Introduction
+Received:25June2025 Therealmofroboticsisrapidlyadvancing,withanever-increasingdemandformobile
+Accepted:14July2025 robotsthatcancollaborateefficientlyandadapttocomplexanddynamicenvironments.
+Published:19July2025
+Thisresearchdelvesintothecrucialdomainofcooperativelocalizationforheterogeneous
+Citation: Karcı,E.O.;Kangal,A.M.; roboticsystems,apromisingavenueinthefieldofrobotics. Heterogeneousteamscom-
+Öncü,S.ImprovementofCooperative
+posed of various robots, such as quadcopters and unmanned ground vehicles (UGVs),
+LocalizationforHeterogeneous
+offerabroaderspectrumofcapabilities,makingthemidealforawiderangeofapplica-
+MobileRobots.Drones2025,9,507.
+tions. However,thesedifferencesinmobilityandsensingcapabilitiescanposesignificant
+https://doi.org/10.3390/
+drones9070507 challengeswhenitcomestoworkingtogethereffectively.
+Cooperativelocalizationinheterogeneousrobotteamspresentssignificantchallenges
+Copyright:©2025bytheauthors.
+duetosensornoise,datainconsistencies,andtheinherentlimitationsofindividualsensors
+LicenseeMDPI,Basel,Switzerland.
+Thisarticleisanopenaccessarticle suchasGlobalPositioningSystems(GPSs),InertialMeasurementUnits(IMUs),andcam-
+distributedunderthetermsand eras. Thesefactorsoftenreducetheaccuracyandreliabilityoflocalization,whichiscritical
+conditionsoftheCreativeCommons foreffectivemulti-robotcollaboration. Toaddresstheseissues,thisstudyleveragessensor
+Attribution(CCBY)license
+fusiontechniques—particularlytheExtendedKalmanFilter(EKF)—tointegratedatafrom
+(https://creativecommons.org/
+diversesensorsandimprovecooperativelocalizationperformance. Byoptimizingfusion
+licenses/by/4.0/).
+Drones2025,9,507 https://doi.org/10.3390/drones9070507
+Drones2025,9,507 2of23
+strategiesandsensorcombinations,theproposedframeworkenhancesprecisionandro-
+bustnessbeyondwhatindividualsensorscanachieve. Moreover,thisresearchinvestigates
+theimpactofimprovedlocalizationonpathplanningandcollaborativetaskswithinhet-
+erogeneousmobilerobots. Acomparativeanalysisofvarioussensorfusionapproachesis
+alsoprovidedtoidentifytheoptimalconfigurationsfordifferentrobottypes. Theinsights
+gainedhavebroadapplicabilityinareassuchasautonomoustransportation,agriculture,
+anddisasterresponse,wherecoordinatedoperationofdiverseroboticplatformsisessential
+formissionsuccess.
+2. LiteratureReview
+In the field of agriculture, there is a growing adoption of cutting-edge and well-
+controlled solutions, such as Unmanned Aerial Vehicles (UAVs) [1]. UAVs, commonly
+knownasdrones,areaircraftsystemsthatfunctionautonomouslywithoutthepresenceof
+ahumanpilotonboard[2]. UAVscanbeequippedwithawiderangeofsensors,making
+themvaluablecontributorstonumerousapplications[3]. Theshifttowardsminiaturized
+electronics,computingsystems,andsensorshasopenednewopportunitiesinthefieldof
+remotesensingapplications[4].
+Inonesuchdevice,asetofmotionprimitivesareimplemented,usingthelow-level
+controllersprovidedbythePX4firmware,whichareemployedforcontrollingthedronein
+autopilotmode. Uponactivation,themotionprimitivesaretransformedintoasequenceof
+MAVLinkmessages—acommunicationprotocolforunmannedvehicles—andtransmitted
+tothedronethroughtheUserDatagramProtocol(UDP)[5]. ThePixhawkcomeswitha
+gyroscope,accelerometers,amagnetometer,andabarometer,andsupportsconnectivity
+withanexternalGPSmodule. Itsroleinvolvesprocessingsensorreadingsandsignalsfrom
+theradiocontroller(RC),generatingflightdata,andmanagingeachmotorindividually.
+Additionally,thePixhawkhasthecapabilitytointerfacewithotherdevicesviaaprotocol
+knownasMAVLink,specificallydesignedforUAVapplications[6].
+Determining pose is crucial for various navigational operations, encompassing lo-
+calization, mapping, andcontrol. Themainmethodemployedprimarilyhingesonthe
+accessibleonboardsensors. Inaerialnavigation,thesemustbejudiciouslyselecteddueto
+payloadconstraints. Theextensivetimerequiredforcomputationinresponsetothefast
+dynamicsofaerialvehiclesposeschallengesfortheircontrol[7]. Inonestudy,adesign
+incorporatinganEKFisemployedforthepurposeofsensorfusion. Itisdemonstrated
+thatthequadcoptercannavigatealongpredeterminedroutesinunfamiliarenvironments,
+utilizing its camera and onboard sensors [8]. The EKF algorithm can be effectively im-
+plementedinthePixhawk,enablingittoaccommodatefurtheroptimizationprocessesof
+attitudedetection. TheEKFalgorithmoffersnotableadvantages,suchasitsstraightfor-
+wardformulation. Itfeaturesarelativelyquickrateofconvergenceforstateestimation.
+Moreover,oncethefilterachievesstability,theestimationaccuracyremainsuninfluenced
+bytheinitialvalue[9]. TheEKFoperatesbyconsistentlyrefreshingalinearapproxima-
+tioncenteredaroundthepriorstateestimateandbyrepresentingstatedensitiesthrough
+Gaussiandistributions[10].
+Inmanyautonomousscenarios,theinitialoperationalphaseinvolvestargetdetection
+viavarioussensorsandthedeterminationoftheiractuallocations,whichfacilitatesthe
+executionofsubsequentoperations. UAVsandUGVshavethepotentialtoaugmentthe
+efficiencyofsurveillance,particularlyinaspectsofcrowddetectionandlocalization[11].
+Cooperativelocalizationexploreshowthepositionsofrobotsoperatinginagroupcan
+be determined more precisely through data exchange among themselves. To improve
+localizationinmulti-robotteams,thepositionsofrobotsrelativetoeachotherwithinthe
+teamcanbeutilizedinsteadofmarkersintheenvironment. Someinsightfulapproaches
+Drones2025,9,507 3of23
+have been suggested regarding cooperative localization [12,13]. In these studies, some
+robotsinthegroupshavebeenfixedtoserveasmarkersthroughouttheentirenavigation
+durationandcoordinatedtoprovidealocalizationinfrastructurefortheotherrobots. Both
+studiesutilizeacentralizedstrategywherethemainrobotcontrolsthemovementtask. The
+mainrobotobservestheotherrobotsandupdatesitsestimatesasaresultofthecooperative
+localizationprocess. Theprimarygoalhereistoensureaccuracyintheseestimates. This
+way,themainrobotcannavigatewithinitsenvironmentandmapthearea. Adecentralized
+approachhasalsobeenpresentedtoaccomplishcooperativelocalization[14]. Inthisstudy,
+eachrobotupdatesitsownresultusingtheestimatestepofthedistributedEKFincon-
+junctionwithdatareceivedfromitsproprioceptivesensors. Moreover,aseachrobotcan
+communicateandexchangeinformationwithoneanother,thesefiltersareusedtoimprove
+cooperative localization. The information exchange occurs when one robot encounters
+another in the environment. As robots benefit from each other during the cooperative
+localizationprocess,theirestimatesbecomeinterdependent. TheapproachusingtheEKF
+producesconsistentestimatesonlywhentheinformationusedisindependentorwhen
+cross-correlationinformationisprovided. Thesestudieshaveprimarilyfocusedonhomo-
+geneousrobots. Incontrast,ourstudydistinguishesitselfbyemployingheterogeneous
+robots. Ontheotherhand,anapproachbasedondistributedmaximumaposterioriestima-
+tionhasalsobeenemployed[15]. ThisapproachhasacomputationalcostofO(n2)and
+isresilienttosuddenmalfunctions,suchasthebreakdownofsomerobots. Toachievea
+fullydistributedapproach,themethodrequiressimultaneouscommunication. Forthis,
+eachrobotneedstocommunicatewiththeothersineachiteration. Theserequirements
+mayhindertheapplicationofthisapproachwhenthecooperativelocalizationofgroups
+composedofnumerousrobotsisdesired. Insometechniquesusedintheupdatephaseof
+cooperativelocalization,robotsdonotuseinformationrelatedtoallotherrobotsinthe
+group. Anexampleofthisconceptwouldbethedatacollectionstrategyinwirelesssensor
+networks[16]. Thesetechniquesdonotprovideacommonestimateandendupproducing
+anapproximatesolutiontotheproblem. Insomestudies,aimingtoproduceacommon
+estimate,partialinformationhasbeenusedtocopewithtimeandspacecomplexity[17,18].
+Forinstance,inonepresentedstudy,groupmovementwasfacilitatedbyeachrobotadjust-
+ingitsestimateusingonlyasubsetofrobots[19]. Inrecentstudies,cooperativelocalization
+hasbeencarriedoutusingthecovarianceintersectionalgorithm. Thisproposedalgorithm
+consistentlycombinesdatainsituationswherethecross-correlationamongestimatesis
+unknown[20]. Thestrategybehindthisalgorithmallowsfordealingwithcross-correlation
+withouttheneedtorecordthecorrelationsbetweentherobots’estimates. Insituations
+where each robot only needs to record its estimates and associated uncertainties, it is
+possibletoperformcooperativelocalizationusingcovarianceintersectionconsistentlyand
+withlowercomplexity. Inonestudy,anapproximatealgorithmwaspresentedtocarryout
+cooperativelocalizationdependentoncovarianceintersection[21]. Inthisstudy,agroup
+composedofthreerobotswasutilized,witheachrobotrecordingonlyitsownestimateand
+uncertainty. TheresultswerecomparedwithanEKFapproachusingthematrixrecorded
+byeachrobot. TheEKFwasusedasabenchmarkinthesecomparisons. Althoughthe
+localizationerrorofthecovarianceintersection-basedapproachwaslargerthanthatofthe
+ExtendedKalmanFilter-basedapproach,thesignificantreductionincomplexityduring
+therecordingandprocessingofinformationjustifiesitsusage. Inourwork, theEKFis
+employedduetoitsabilitytohandlenonlinearsystemmodels,makingitwell-suitedto
+real-world applications where perfect linearity is rare. The EKF enhances localization
+performance by fusing noisy sensor data and providing robust state estimates, even in
+challengingandunstructuredenvironmentslikeagriculturalfields.
+Drones2025,9,507 4of23
+3. SensorDataTypes
+Intherealmofcooperativelocalizationforheterogeneousmobilerobots,theutilization
+ofvarioussensordatatypesisfundamentaltoachievingaccurateandreliablepositioning.
+ThefusionofdatafromsensorssuchastheEmlidREACHM+GPS,theIMU,andcamera
+odometryformsthecornerstoneofthisresearch. SensorfusionusingtheEKFcombines
+datafromabsolutesensorslikeGPSs,whichprovideglobalpositionbutcanbeunreliable
+inoccludedenvironments,andrelativesensorslikeIMUs,encoders,andvisualodometry,
+whichofferhigh-ratemotionupdatesbutdriftovertime. Theircomplementarystrengths
+allowtheEKFtoproducerobustlocalization. TheStereolabsZEDMini,combiningcam-
+era and IMU data, outputs visual–inertial odometry with covariance, helping the EKF
+assessmeasurementuncertainty. SensordataarepublishedasROSmessages(Pose,Twist,
+Odometry,GPS-Fix)andfusedtoestimatetheUGV’spose. Thisprocessisillustratedasa
+diagraminFigure1.
+Figure1.Dataflowamongsensors.
+3.1. GlobalPositioningSystem(GPS)
+GPSdatastandsasoneoftheprimarysourcesofinformationforlocalization. GPS
+sensorsprovideprecisegeographiccoordinates,includinglatitude(φ),longitude(λ),and
+altitude(h).TheseparametersenablerobotstopinpointtheirlocationontheEarth’ssurface.
+Additionally,thetimestamp(t)associatedwithGPSdataisvitalforsynchronizationwith
+othersensorinformation,allowingforrobustcooperativelocalization.
+3.2. InertialMeasurementUnit(IMU)
+IMUdataoffersinsightsintotherobot’smotionandorientation. IMUsensorsprovide
+measurements of linear acceleration (a , a , a ) and angular velocity (ω) in three axes.
+x y z
+Thesemeasurementsenablerobotstoassesshowtheyaremovingandrotating. IMUsalso
+provideinformationabouttherobot’sorientation,oftenrepresentedasroll,pitch,andyaw
+anglesorasquaternions. AswithGPSdata,thetimestampassociatedwithIMUdatais
+crucialfordatasynchronizationandfusion.
+3.3. CameraOdometry
+Camera odometry data brings visual information into the mix, allowing robots to
+estimatetheirmotionbyanalyzingimages. Keycomponentsofcameraodometrydata
+includefeaturepointsdetectedortrackedintheimageframe,opticalflowdatarevealing
+pixel motion, and pose information representing the camera’s position and orientation.
+The timestamp associated with camera odometry data is essential for aligning visual
+informationwithothersensordatasources.
+Drones2025,9,507 5of23
+Thesesensordatatypes,includingGPS,IMU,andcameraodometry,playapivotal
+roleinmobilerobotics,contributingtothelocalization,mapping,andnavigationprocesses.
+Theintegrationandfusionofdatafromthesesensorsenablerobotstooperateeffectivelyin
+avarietyofenvironments,fromoutdoorlandscapestoindoorspaces,andundervarious
+conditions, including dynamic and GPS-denied scenarios. Configuration matrices for
+odometrydata,posedata,andIMUdataareprovidedinTable1.
+Table1.Configurationmatricesforodometrydata,posedata,andIMUdata.
+Parameter odom0_config pose0_config imu0_config
+Xposition True True False
+Yposition True True False
+Zposition False False False
+Rollorientation False False True
+Pitchorientation False False True
+Yaworientation True True True
+Xvelocity False False False
+Yvelocity False False False
+Zvelocity False False False
+Rollangularvelocity False False False
+Pitchangularvelocity False False True
+Yawangularvelocity False False True
+Xacceleration False False True
+Yacceleration False False True
+Zacceleration False False True
+4. HeterogeneousMobileRobots
+4.1. UnmannedGroundVehicle(UGV)
+The UGV used in the study was equipped with a differential drive mechanism, a
+popularchoiceinmobilerobotics. Thistypeofdrivesystemconsistsoftwodrivewheels
+mountedonacommonaxis,whereeachwheelcanbeindependentlydriveneitherforward
+orbackward. Thisconfigurationoffersprecisecontrolovertherobot’smotion. Notably,in
+thisUGV,showninFigure2below,itschassisandmotorsweresourcedfromanelectrical
+wheelchair,makingitacost-effectiveandaccessibleplatformforresearchanddevelopment.
+Figure2.UnmannedGroundVehicle(UGV).
+One of the fundamental concepts associated with differential drive systems is the
+conceptoftheInstantaneousCenterofCurvature(ICC),asshowninFigure3below. To
+achieverollingmotionandenabletheUGVtorotateaboutaspecificpoint,theICCcomes
+intoplay. Byvaryingthevelocitiesofthetwodrivewheels,theUGVcannavigatealong
+different trajectories, and the ICC is the point around which the robot rotates during
+itsmotion.
+ω(R+l/2) =Vr (1)
+Drones2025,9,507 6of23
+ω(R−l/2) =Vl (2)
+R = (l/2)((Vl+Vr)/(Vr−Vl)) (3)
+ω = (Vr−Vl)/l. (4)
+Figure3.Differentialdrivekinematics.
+Theequationspresentedaboveillustratetherelationshipbetweenthewheelvelocities,
+theICC,androtation. Specifically,therateofrotation(ω)abouttheICCmustbethesame
+forbothwheels,leadingtoequationsthathelpcalculatetheICC’slocation(R)atanygiven
+moment. Theseequationsarecrucialforunderstandingtherobot’smovement,whetherit
+ismovingforwardinastraightline,rotatinginplace,orrotatingaboutoneofitswheels.
+Additionally,thepaperhighlightsthesignificanceofavoidingasingularitywheretheUGV
+cannotmovedirectlyalongitsaxis.
+4.2. UnmannedAerialVehicle(UAV)
+InthefabricationoftheUAV’sarms,boththeneedforlightweightconstructionto
+preventundueburdenonthebodyandtherequirementforrobustnesstosupporttherotors
+wereconsidered. Asaresult,acompositedesignwasemployed. Toconstructthearms,a
+carbonfibertubewithaninnerdiameterof16mmandathicknessof1mmwasfitover
+analuminumtubeof1mmthicknessand14mminnerdiameter,utilizinganinterference
+fitmethod. Thisdesignleveragedthelightnessofaluminumwhilebenefitingfromthe
+strengthofcarbonfiber.
+Theuseofa3DprinterwasinstrumentalinthecreationoftheUAV’slandinglegs,
+battery holder, and fasteners. The use of 3D printing enabled the formation of high-
+complexity fasteners according to design requirements. Furthermore, it facilitated the
+design of the battery holder and UAV’s landing legs with appropriate dimensions and
+structures. By using carbon fiber filament, structures were produced that were strong
+relative to their weight, and uniformly shaped. The assembly of the UAV is shown in
+Figure4. Thecorrespondingangularvelocityrepresentationaboutthebodyframeand
+inertialframeisindicatedinFigure5.
+Thekinematicsanddynamicsequationscanbecombinedas
+ .
+m 0 0 0 0 0 u
+0 m 0 0 0 0 v .
+  
+→B  .
+MBυ . =   0 0 m 0 0 0     w .   (5)
+0 0 0 IB 0 0 p
+ XX  
+0 0 0 0 IB 0 q .
+ YY  
+.
+0 0 0 0 0 IB r
+ZZ
+(cid:124) (cid:123)(cid:122) (cid:125)(cid:124)(cid:123)(cid:122)(cid:125)
+MB →
+.
+B
+υ
+Drones2025,9,507 7of23
+  
+0 0 0 0 mw −mv u
+0 0 0 −mw 0 mu v
+  
+  
+CB → υ B =   0 0 0 mv −mu 0     w  (6)
+0 0 0 0 IB r −IB qp
+ ZZ YY  
+0 0 0 −IB r 0 IB p q
+ ZZ XX  
+0 0 0 IB q −IB p 0 r
+YY XX
+(cid:124) (cid:123)(cid:122) (cid:125)(cid:124)(cid:123)(cid:122)(cid:125)
+CB →B
+υ
+ 
+F
+x
+ F 
+ y 
+→ Λ B =    F z    (7)
+M 
+ x
+M 
+ y
+M
+z
+(cid:124) (cid:123)(cid:122) (cid:125)
+→B
+Λ
+MB → υ . B +CB → υ B = → Λ B (8)
+→ υ . B = (cid:16) MB (cid:17)−1 (cid:20) −CB → υ B + → Λ B(cid:21) . (9)
+Figure4.UnmannedAerialVehicle(UAV).
+Figure5.Angularvelocityrepresentationaboutbodyframeandinertialframe.
+Withthis,thestatespaceequationisobtainedinaverycompactform. Theinertia
+products are assumed as zero (cid:0) IB = IB = IB =0 (cid:1) . During the mathematical model
+YX ZX ZY
+Drones2025,9,507 8of23
+derivationofUAV,R conventionisemployedbyrotatingaboutthemovingframe. It
+zyx
+canbegivenas
+R = R (φ)R (θ)R (ϕ). (10)
+zyx z y x
+Atthispoint,aspecialtransformationmatrixisneededtodefinetheangularvelocities
+given in the body frame with respect to an inertial frame. This special transformation
+matrixcanbedefinedas
+.  
+ϕ p
+.
+ θ   = T  q  (11)
+.
+φ r
+ 
+1 0 −sinθ
+T −1 = 0 cosϕ sinϕcosθ. (12)
+ 
+0 −sinϕ cosϕcosθ
+Asmentionedabove,R conventionisemployedbyrotatingaboutthebodyframe.
+zyx
+Oneofthereasonswhyitisselectedisthatfindingthederivativesofthemassmomentsof
+.E .E .E
+inertias I , I ,and I hasahighcomputationalcost. Itismoreconvenienttousethe
+XX YY ZZ
+bodyframeinsteadoftheinertialframebecauseofthis. Therefore,dynamicsequationsfor
+rotationalmotionregardingthebodyframeareused.
+5. SensorFusionforLocalization
+Accurate and reliable localization is a phenomenal challenge in robotics and au-
+tonomoussystems. Itisimperativeforrobotstoknowtheirpositioninspaceinorderto
+navigateandinteractwiththeirenvironmenteffectively. However,nosinglesensorcan
+provide a complete and faultless solution to this problem. This is where sensor fusion
+comesintoplay.
+Sensorfusionisakeytechniquethatintegratesdatafrommultiplesensorstoprovidea
+morereliableandaccurateunderstandingofarobot’spositionandorientation. Bycombin-
+ingthestrengthsofvarioussensormodalitiessuchasGPSs,IMUs,cameraodometry,and
+gyroscopes,sensorfusioncompensatesforthelimitationsanduncertaintiesofindividual
+sensors, resulting in improved localization performance. Popular techniques in sensor
+fusionincludeBayesianfilters,Kalmanfilters,andparticlefilters.
+5.1. ExtendedKalmanFilter(EKF)
+One of the cornerstone methods employed in this study is the EKF. The EKF is a
+recursiveestimationalgorithmthatextendsthebasicKalmanfiltertohandlenonlinearities
+in sensor measurements and dynamic systems. It is widely utilized in robotics for its
+capabilitytofusedatafromsensorslikeGPSs,IMUs,andodometry. TheEKFmaintains
+aprobabilitydistributionoftherobot’sstate,effectivelycombiningpastestimateswith
+currentsensormeasurementstoproduceamoreaccuratelocalizationresult. Thisalgorithm
+isparticularlywell-suitedforaddressingthecomplexitiesofdynamicandnoisyenviron-
+ments. TheequationsfortheEKFcanbedividedintotwomainsteps—thepredictionstep
+(alsoknownasthetimeupdate)andthecorrectionstep(alsoknownasthemeasurement
+update)—asdescribedbelowwith(13),(14),(15),(16),and(17).
+1. PredictionStep(TimeUpdate)
+Thestateestimateatthecurrenttimestep(t)canbegivenas
+xˆ t = f(xˆ t−1 ,u t ). (13)
+Drones2025,9,507 9of23
+Here,xˆ representsthepredictedstateattimet, f istheprocessmodelthatdescribes
+t
+howthestateevolvesovertime,xˆ t−1 isthepreviousstateestimate,andu t isthecontrol
+inputattimet.
+Theerrorcovarianceatthecurrenttimestepcanbewrittenas
+P t = A t P t−1 A t T+Q t . (14)
+P representstheerrorcovariancematrixattime t, A istheJacobianmatrixofthe
+t t
+processmodel,P t−1 istheerrorcovarianceattheprevioustimestep,andQ t istheprocess
+noisecovariance.
+2. CorrectionStep(MeasurementUpdate)
+TheKalmangainattimetcanbedefinedas
+(cid:16) (cid:17)−1
+K = PHT H PHT+R . (15)
+t t t t t t t
+K representstheKalmangainattimet, H istheJacobianmatrixofthemeasurement
+t t
+model,andR isthemeasurementnoisecovariance.
+t
+Theupdatedstateestimateattimetcanbeexpressedas
+xˆ = xˆ +K (z −h(xˆ )). (16)
+t t t t t
+Here, z is the actual measurement at time t and h is the measurement model that
+t
+predictswhatthemeasurementshouldbebasedonthecurrentstateestimate.
+Theupdatederrorcovarianceattimetcanbeprovidedas
+P = (I−K H )P. (17)
+t t t t
+Here, I istheidentitymatrix.
+5.2. RobotOperatingSystem(ROS)
+Inthiswork,thestudywasconductedwithintheframeworkoftheRobotOperating
+System(ROS).ROSisaflexibleandopen-sourceplatformthatisspecificallydesignedfor
+roboticsdevelopment. Itoffersacomprehensivesetoftoolsandlibrariesthatfacilitate
+thedevelopment,integration,andtestingofroboticsystems. ROSstimulatesmodularity.
+Thus,itisidealformanagingthecomplexitiesofsensorfusionandlocalizationwithina
+roboticapplication.
+Thisstudydelvesintotheintricaciesofsensorfusion,withaparticularfocusonthe
+applicationoftheEKFwithintheROSplatformusingthe‘RobotLocalization’package.
+The process noise covariance (Q ) and measurement noise covariance (R ) parameters
+t t
+were configured using the default settings of the ROS Robot Localization package. By
+combining the power of sensor fusion techniques and ROS’s capabilities, we aimed to
+significantlyenhancetheprecisionandreliabilityofcooperativelocalizationincomplex
+environments. Thisstudyopensthedoortomyriadapplicationsinthefieldofrobotics,
+includingautonomoustransportation,precisionagriculture,anddisasterresponse,where
+accurateandrobustlocalizationiscrucialformissionsuccess.
+6. TrajectoryGenerationandPathFollowing
+In the context of this study, we explore the use of heterogeneous mobile robots,
+consisting of both UAVs and UGVs, to enhance cooperative localization. Our primary
+objectiveistoimprovetheprecisionandreliabilityofthelocalizationprocess.
+Drones2025,9,507 10of23
+Theapproachweemployinvolvesatwo-stepprocedure: waypointcollectionand
+trajectorygeneration,followedbypathfollowing. First,arobot’slocalizationsystemis
+utilizedtocollectasetofcrucialwaypointswithintheenvironment. Thesewaypointsserve
+asreferencepointsthatguidetherobotsinachievingaccuratepositioning.
+Subsequently, a trajectory is generated based on these collected waypoints. This
+trajectoryprovidesapredefinedpathfortheotherrobotstofollow. Thetrajectorygen-
+eration process leverages the localization information from one robot to create an opti-
+mized path that optimally suits the specific environmental conditions and cooperative
+localizationrequirements.
+Thetrajectorygenerationforadroneisasophisticatedprocessthatblendsthecompu-
+tationalcapabilityofMATLABR2023bwiththedynamiccoordinationofROS.
+The foundation of trajectory generation lies in Equations (18) and (19), where x(t)
+represents the robot’s x-coordinate and x i and x i+1 denote the starting and ending x-
+coordinatesofwaypoints. Also,y(t)representstherobot’sy-coordinateandy i andy i+1
+denotethestartingandendingy-coordinatesofwaypoints. ThevariableT signifiesthe
+i
+timestamp associated with the starting waypoint, while T i+1 corresponds to the times-
+tamp of the ending waypoint. This equation, alongside its y-coordinate counterpart,
+enablesustogenerateasmoothtrajectorybetweenwaypoints. Bydiscretizingthedata
+based on Euclidean distance, we ensure that the robots follow a predefined path at an
+appropriatevelocity.
+x(t) = x + x i+1 −x i (18)
+i T i+1 −T i
+y(t) = x + y i+1 −y i . (19)
+i T i+1 −T i
+The algorithm discretizes the data. It starts from the first point and goes through
+thetrajectoryuntilthesumoftheEuclideandistances‘d’exceedsthespecifiedvalue. It
+thenrecordsthatpoint,andtheprocedureisrepeated. Theprocesscanberepresentedas
+showninFigure6. Byemployingthepositionandorientationinformationderivedfrom
+thewaypoints,alongsidetheEuclideandistanceandtrajectoryvelocitydata,thisfunction
+conductsthenecessarycalculationstogeneratethetrajectoryrequiredfortheUAV.
+Figure6.Pseudocodechartrepresentingdiscretization.
+Drones2025,9,507 11of23
+There is a function which is responsible for generating a set of visualizations to
+representtherobot’smovementinamoreunderstandablemanner. Therobot’strajectory,
+velocity, and acceleration in terms of linear and rotational movement while following
+selectedwaypointsarepresentedinFigure7.
+Figure7. Robot’strajectory,velocity,andaccelerationintermsoflinearandrotationalmovement
+whilefollowingselectedwaypoints.
+Forpathfollowing,weemployedaProportional–Integral–Derivative(PID)control
+approachtocontinuouslyadjusttherobot’sheading, allowingittotrackthegenerated
+trajectory. PIDcontrolwasimplementedmanuallythroughatrial-and-errormethod. There
+werethreePIDcontrollers: longitudinal,lateral,andangular.
+6.1. LongitudinalPIDController
+This controller primarily deals with the robot’s forward/backward motion. The
+longitudinalcontroleffort(U )iscalculatedas
+long
+(cid:90) e
+long
+U = K e +K e dt+K . (20)
+long p long i long d dt
+K ,K,andK aretheproportional,integral,andderivativegains,respectively. Lon-
+p i d
+gitudinalerrorisexpressedase ,whichmeasuresthedifferencebetweenthedesired
+long
+(cid:82)
+andactualpositionsalongtherobot’slongitudinalaxis. Timestepisexpressedasdt,and
+representstheintegraloperation.
+6.2. LateralPIDController
+Thiscontrollerprimarilydealswiththerobot’ssidewaysmotion. Thelongitudinal
+controleffort(U )iscalculatedas
+lat
+(cid:90) e
+U = K e +K e dt+K lat . (21)
+lat p lat i lat d dt
+The lateral error is expressed as e , which represents the difference between the
+lat
+desiredandactualpositionsalongtherobot’slateralaxis.
+6.3. AngularPIDController
+Thiscontrollerfocusesoncontrollingtherobot’sorientation(heading). Theangular
+controleffort(U )iscalculatedas
+ang
+(cid:90) e
+ang
+U = K e +K e dt+K . (22)
+ang p ang i ang d dt
+Drones2025,9,507 12of23
+Angularerrorisexpressedase ,whichmeasuresthedifferencebetweenthedesired
+ang
+andactualrobotorientation.
+K ,K,andK aretheproportional,integral,andderivativegainsforeachcontroller,
+p i d
+fine-tunedinMATLABR2023bforthesimulationenvironment. Intheexperimentaltests,
+thegainsforeachcontrollerwereadjustedexperimentally.
+Inpractice,thetrajectorygenerationandpathfollowingprocessesareimplementedto
+ensurethatallrobotsworkcollaborativelytowardsachievingacommongoal. Byfollowing
+thegeneratedtrajectory,robotscanmaintainrelativepositionsandcoordinatetheiractions
+effectively,ultimatelycontributingtotheenhancementofcooperativelocalization.Together,
+thesetechniquesplayacrucialroleinoptimizingcooperativelocalization,ensuringthat
+robotsnavigateefficientlyandaccuratelyindynamicenvironments.
+Thisapproachformsthetheoreticalbasisforthepracticalimplementationoftrajectory
+generationandpathfollowinginourresearch,anditholdsthepromiseofsignificantly
+improvingcooperativelocalizationindynamicandchallengingenvironments.
+Thelow-levelcontroloftheUAVwasmanagedbyPixhawk,anopen-source,high-
+performanceautopilothardwaresuitableforfixed-wing,multirotor,andotherplatforms.
+7. SimulationSetupandResults
+ThesimulationbeganwiththedesignoftheUAVandUGVinAutodeskFusion360,a
+solidmodelingcomputer-aideddesignandcomputer-aidedengineering(CAE)software
+program. Here,thephysicalpropertiesofthevehicles,suchastheirshape,size,andthe
+interconnection of their parts, were defined. The CAD models were used to generate
+Unified Robot DescriptionFormat (URDF) models, which are XML files describing the
+physicalproperties,visualgeometry,collisiongeometry,andkinematicpropertiesofthe
+robots,includingtheirjoints,links,andphysicalparameterslikeinertiatensorsandcenters
+ofmass. ThisURDFfileiscrucialforROS,asitprovidesacomprehensivespecificationof
+therobot’sphysicalaspectsandhowtheyrelatetooneanother.
+GazebowasusedtocreatearealisticsimulationenvironmentfortheUAVandUGV.
+ThesimulationenvironmentcreatedinGazeboandRVizisshowninFigure8. Theserobots
+were tested in a risk-free, virtual world, enabling the validation of control algorithms,
+navigationstrategies,andinteractionbehaviors. Inthesimulation,theUGVwasmanually
+controlledviakeyboardinputs. Waypointsweremarkedduringthisprocess,whichthe
+UAVsubsequentlyfollowed. AsthewaypointsweredefinedandadjustedfortheUAV
+throughthemanualcontroloftheUGV,thesechangesweredynamicallyreflectedinthe
+RVizenvironment.
+TheUAVwascontrolledviaMAVROS,aROSpackagethatprovidesMAVLinkfunc-
+tionality,offeringasimpleandunifiedinterfacetocontroldrones. TheUAVfollowsthe
+trajectoryoutlinedbythewaypointsmarkedbytheUGV.Itusessensordatatoensureitis
+followingthecorrectpath. ThissensordataisprocessedusinganEKF,whichisarecursive
+algorithmusedtoestimatethestateofadynamicsystemaffectedbyrandomnoise. This
+filteringprocessensuresasmooth,accuratetrajectory.
+IntheMATLAB2023bcode,comparisonsbetweenpositiondataderivedfromtwo
+differentsources,onebeingunfilteredGPScoordinatesandtheotherbeingcoordinates
+processedbyanEKF,wereperformed. Thepurposeofthiswastoassesstheefficacyofthe
+EKFinimprovingtheaccuracyofthepositiondata. Positionestimationwithandwithout
+theEKFwhilethedronewasfollowingthewaypointschosenbytheUGVaregivenin
+Figure9.
+Drones2025,9,507 13of23
+Figure8.SimulationenvironmentcreatedinGazeboandRViz.
+Figure 9. Position estimation with and without Extended Kalman Filter with drone following
+waypointschosenbyUGV.
+The final arrays contain a history of the positions reported by the GPS and EKF,
+respectively, each time the position changed. These arrays can be used to analyze and
+comparethetrajectoryfollowedbythequadrotoraccordingtoeachsourceofpositiondata.
+The EKF utilized in this scenario combined position information from Gazebo plugins,
+suchasfromtheGPS,accelerometer,andmagnetometer,toestimatethequadrotor’sstate.
+Sensordata,encompassingbothunprocessedandEKF-appliedmeasurements,were
+methodicallytabulatedandcomparedagainstapredefinedtrajectory,enablinganevalua-
+tionoftheaccuracyanddependabilityoftrackingmethodologiesindynamicenvironments.
+ErroneousormeaninglesssensormeasurementswereeliminatedusingtheEKF,which
+effectivelyfusessensordatatoimproveaccuracy. Acomparativeanalysisoftherawand
+EKF-processedsensordatainwaypointnavigationisprovidedinTable2.
+Drones2025,9,507 14of23
+Table2.ComparativeanalysisofRawandEKF-processedsensordatainwaypointnavigation.
+CoordinateAxesand
+PointNr. EKF Normal Assigned
+EuclideanDistances(m)
+X 0.5082 0.4660 0.6832
+1 Y 4.522 4.535 4.472
+d 0.1821 0.2262 -
+X 1.742 1.704 1.802
+2 Y 6.092 6.146 5.981
+d 0.1262 0.1919 -
+X 3.578 3.571 3.555
+3 Y 6.899 6.912 6.970
+d 0.0745 0.0602 -
+X 6.227 6.227 6.227
+4 Y 7.066 7.031 7.073
+d 0.0075 0.0424 -
+X 7.192 7.192 7.192
+5 Y 7.084 7.040 7.123
+d 0.0395 0.0830 -
+Tofurtheranalyzethetrackingaccuracy,fivedistinctpoints,includingtheirX and
+Y coordinates, were selectively extracted from the graph representing the sensor data.
+Foreachofthesepoints,theEuclideandistancefromthecorrespondinglocationonthe
+assignedtrajectorywascalculated. Thisstepiscrucialforquantifyingthedeviationofthe
+sensordatafromtheexpectedpath. TheEuclideandistanceiscomputedas
+(cid:114)
+(cid:16) (cid:17)2 (cid:16) (cid:17)2
+d = X−X + Y−Y . (23)
+ref ref
+BuildinguponthecalculatedEuclideandistances,thenextphaseinvolvedcomputing
+theRootMeanSquareError(RMSE)toprovideacomprehensivemeasureoftheoverall
+tracking accuracy. The RMSE offers aclear indication of theaverage magnitude ofthe
+trackingerroracrosstheselectedpoints. TheRMSEwascalculatedas
+(cid:114)
+RMSE =
+1∑n
+e2. (24)
+n i=1 i
+Inouranalysis,theEuclideandistanceateachoftheselectedpointsservesasadirect
+measureoferror,quantifyingthedeviation.
+In our comprehensive evaluation, the performance of the drone’s navigation was
+meticulouslyassessedacrossvarioustrajectorypatterns,including8-figure,ellipse,circle,
+hexagon, and a straight line. Position estimations with and without the EKF while the
+dronewasfollowingcircle,hexagon-shaped,8-figure,andellipse-shapedtrajectoriesare
+shown in Figures 10 and 11. The RMSE was calculated for each trajectory pattern to
+quantify the tracking accuracy. An RMSE analysis of drone navigation is presented in
+Table3. Fivedistinctpointsfromeachgraphofthe8-figure,ellipse,circle,hexagon,and
+line patterns were selected for calculating the RMSE. Notably, the application of the
+EKFdemonstratedasignificantimprovementinprecision. Forinstance,intheassigned
+trajectorytask,theEKF-processeddatayieldedanRMSEof0.1061m,whereasthedata
+without EKF processing exhibited a slightly higher RMSE of 0.1416 m. These results
+weresystematicallytabulatedtoofferaclearcomparativeanalysisofthedrone’stracking
+accuracy under different geometric patterns, underscoring the effectiveness of EKF in
+enhancingnavigationalprecision.
+Drones2025,9,507 15of23
+Figure10.PositionestimationwithandwithoutExtendedKalmanFilterwhiledronewasfollowing
+circleandhexagon-shapedtrajectories.
+Figure11.PositionestimationwithandwithoutExtendedKalmanFilterwhiledronewasfollowing
+8-figureandellipse-shapedtrajectory.
+Table3.RMSEanalysisofdronenavigationinautonomousgeometricflightmodesforsimulation.
+Shape FlightMode SensorDataType RootMeanSquareError(m)
+Autonomous EKF 0.0193
+Line
+Geometric Normal 0.0369
+Autonomous EKF 0.1575
+Circle
+Geometric Normal 0.1912
+Autonomous EKF 0.0382
+Ellipse
+Geometric Normal 0.1694
+Autonomous EKF 0.1032
+Hexagon
+Geometric Normal 0.1493
+Autonomous EKF 0.1061
+8-figure
+Geometric Normal 0.1240
+Whilethesimulationprovidesareasonablyrealisticapproximationofphysicalbehav-
+iors,limitationsincludethesimplifiedsensornoisemodelsandidealizedcommunication
+withoutdelaysorpacketloss. Nevertheless,itenabledtheeffectivetestingoflocalization,
+controllogic,andsystemintegrationbeforedeployment.
+8. ExperimentalTestResultsandDiscussion
+Inourpreliminarysetupfordroneassembly,thecarefulalignmentoftherotorsonto
+thedronearmswasacriticalfactor. Ensuringtherotors’flatnessisparamountforoptimal
+Drones2025,9,507 16of23
+flightperformance,asanytiltordeviationfromtheintendedanglecancauseimbalances
+duringflight,leadingtoinaccurateresultsorcrashes. Toestablishthepreciselevelingof
+therotors,weemployedtheuseofawaterlevelruler.
+The assembly was then placed on a weighing scale, with the expectation that the
+downwardthrustcreatedbythespinningpropellerwouldregisterasanincreaseinweight,
+effectivelyindicatingtheliftingcapacityofeachrotor. Theexperimentalsetuptomeasure
+theliftgeneratedbyeachrotorisshowninFigure12. Theresultsfromthesetestsprovided
+valuable insight into the overall lifting capacity of the rotors, crucial information for
+optimizingourdrone’sflightperformance. Variationinliftvaluesaccordingtothegiven
+currentunder16.3VoltsispresentedinTable4. AcorrespondingAmpsvs. thrustdiagram
+isprovidedinFigure13.
+Figure12.Experimentalsetuptomeasureliftgeneratedbyeachrotor.
+Figure13.Amps(A)vs.thrust(gf)under16.3Volts.
+Drones2025,9,507 17of23
+Table4.Variationinliftvaluesaccordingtogivencurrentunder16.3Volts.
+No. Amps(A) Thrust(gf) No. Amps(A) Thrust(gf)
+1 0.3 24 24 2.6 413
+2 0.4 48 25 2.7 430
+3 0.5 70 26 2.8 440
+4 0.6 88 27 2.9 447
+5 0.7 111 28 3.0 467
+6 0.8 131 29 3.1 480
+7 0.9 145 30 3.2 487
+8 1.0 168 31 3.3 507
+9 1.1 185 32 3.4 515
+10 1.2 200 33 3.5 523
+11 1.3 220 34 3.6 544
+12 1.4 230 35 3.7 552
+13 1.5 248 36 3.8 561
+14 1.6 270 37 3.9 574
+15 1.7 285 38 4.0 582
+16 1.8 300 39 4.1 591
+17 1.9 315 40 4.2 606
+18 2.0 335 41 4.3 617
+19 2.1 340 42 4.4 623
+20 2.2 361 43 4.5 630
+21 2.3 377 44 4.6 650
+22 2.4 390 45 4.7 655
+23 2.5 400 46 4.8 663
+In the process of implementing an EKF for sensor fusion in our robotics system,
+weemployedtheZEDminicameraasakeysensor,exploitingitsbuilt-inaccelerometer,
+gyroscope,andIMU.TheZEDminicameraprovidesorientationinformationintheform
+ofquaternions,amathematicalconstructparticularlyusefulforrepresentingorientations
+androtationsofobjectsinthreedimensions. TheimageviewoftheZEDminicamerain
+RVizisshowninFigure14.
+Figure14.ImageviewofZEDminicamerainRViz.
+Drones2025,9,507 18of23
+Settingupthecorrectconfigurationmatricesformsacrucialpartofthisprocedure.
+Thesematricesguidetheextractionofaccuratesensorinformationandareinstrumental
+in their fusion within the EKF. However, defining the covariance matrices, which is a
+keycomponentoftheKalmanfilteringprocess,wasnothandledmanually. Instead,the
+EKF automatically integrates the covariance data derived from the ZED mini camera,
+thusensuringoptimalperformanceandreducingtheriskofhuman-inducederror. The
+covariancedatageneratedbytheZEDMiniisutilizedtoquantifyuncertaintyintheposition
+andorientationestimates,whichhelpsinimprovinglocalizationaccuracybyinforming
+sensorfusionalgorithms.
+In this study, covariance information is utilized within the EKF during the sensor
+fusionprocesstoweighthereliabilityofeachmeasurementsourceforboththeUAVand
+UGV.Priortocooperativetesting,eachrobotwasindividuallytestedtoensurethatthe
+EKF outputs showed low covariance, indicating high confidence in the pose estimates.
+Whilethecovariancecontributesinternallytothestateestimationprocess,ourperformance
+evaluation focuses on the RMSE between the estimated and ground-truth positions to
+quantifylocalizationaccuracy. Sincetheobjectiveofthisworkiscooperativelocalization
+rather than per-robot localization enhancement, the role of covariance is limited to its
+functionwithinthefilter,ratherthanbeingdirectlyanalyzedintheresults.
+The drone developed for this research was primarily controlled using a radio con-
+troller. Duringitsflights,severalexternaldisturbanceswereencountered. Nevertheless,
+despite these challenges, the drone managed to hover and land safely. To evaluate the
+performanceoftheEKF,itwasinitiallyintendedforthedronetoundertakeautonomous
+flight. However,thisprovedtobeacomplexendeavorduetotheintricatenatureofthe
+controlalgorithmsandtrajectory-followingtasks. Theriskassociatedwithensuringcontrol
+duringautonomousflightrendereditanunsafeapproach.
+Toaddressthislimitationandstillachievedatacollectiongoals,anothermethodwas
+employed.Thedronewascontrolledmanually.Waypointsweregeneratedthroughmanual
+flight;therewasnoautonomousflightinvolved. TheUGVwastaskedwithfollowinga
+predefinedtrajectoryassignedbythedrone. AstheUGVnavigateditscourse,itcollected
+sensordataandprocesseditthroughtheEKF.Thissetupprovidedavaluablebenchmark.
+TheUAV’strajectoryservedasareferenceagainstwhichthepositiondataderivedfromthe
+UGV’sEKFcouldbecompared. TheUGVcompletingitstaskincooperationwiththeUAV
+isshowninFigure15. OncetheUAVcompleteswaypointselection,itsendsthewaypoints
+tothesitemanager;thesitemanagerthencreatesatrajectoryandsendsittotheUGV.
+Figure15.TheUGVwastaskedwithfollowingapredefinedtrajectoryassignedbythedrone.
+Moreover,foracomprehensiveanalysis,twosetsofEKFresultswerecharted.Thefirst
+wasderivedfromthedrone’sEKFusingboththeZEDminicameraandGPSdata,while
+thesecondomittedGPSdata. EKF-applieddatawithandwithoutGPSwhiletheUGVwas
+followingthewaypointschosenbytheUAVaregivenFigure16. Thesecomparativegraphs
+Drones2025,9,507 19of23
+effectivelyshowcasetheperformancedistinctionbetweenthetwoconfigurations,offering
+insightsintotheenhancedaccuracypotentiallyachievedwiththeincorporationofGPS.
+Figure16.EKF-applieddatawithandwithoutGPSwithUGVfollowingwaypointschosenbyUAV.
+Anenhancementintheexaminationoftrackingprecisionwasachievedbythemeticu-
+lousselectionoffivespecificpoints,alongwiththeirrespectiveXandYcoordinates,from
+thechartillustratingthesensordata. TheEuclideandistancetotheirrespectivepositions
+onthepredeterminedpathwascomputedforeachofthesepoints. Acomparativeanalysis
+oftherawandEKF-processedsensordatawithandwithoutGPSispresentedinTable5.
+Table5.ComparativeanalysisofrawandEKF-processedsensordatawithandwithoutGPS.
+CoordinateAxesand
+PointNr. EKF EKFwithGPS Assigned
+EuclideanDistances(m)
+X 6.377 6.210 6.032
+1 Y 0.7529 0.7391 0.8117
+d 0.350 0.1922 -
+X 8.446 8.449 8.549
+2 Y 0.5971 0.5997 0.6761
+d 0.1298 0.1258 -
+X 9.122 9.271 9.255
+3 Y 0.4708 0.5952 0.6389
+d 0.2144 0.0465 -
+X 10.59 10.66 10.38
+4 Y 0.4485 0.3915 0.3714
+d 0.2237 0.2807 -
+X 10.95 10.83 10.70
+5 Y 0.0747 0.0700 0.0664
+d 0.2501 0.1251 -
+To enhance the granularity of our analysis, we selected five key points from each
+dataset’sgraph,focusingontheirXandYcoordinates. Forthesepoints,wecalculatedthe
+Euclideandistancefromtheassignedtrajectory,providingaprecisemeasureofdeviation.
+Subsequently, we computed the RMSE using these distances. Our findings revealed a
+notabledifferenceinaccuracybetweenthetwomethods: theEKFwithGPSdataresulted
+inanRMSEof0.1729m,whiletheEKFwithoutGPSshowedahigherRMSEof0.2441m.
+ThiscomparisonunderscoresthesignificantimpactofGPSintegrationontheaccuracyof
+EKF-basedsensordatatracking.
+Drones2025,9,507 20of23
+Inourcomprehensiveinvestigation,weexpandedthescopeoftheanalysistoinclude
+theUGVfollowingtwospecificpathpatterns: astraightlineandaU-shapedfigure. EKF-
+applieddatawithandwithoutGPSwhiletheUGVwasfollowingthelineandU-shaped
+trajectoriesarepresentedinFigures17and18. Eachexperimentwasrigorouslyconducted
+fivetimestoensureconsistencyandreliabilityinourfindings.TheRMSEwasmeticulously
+calculatedforeachiteration,providingarobustdatasetthatreflectstheUGV’stracking
+precisionunderdifferentconditions. Thisapproachallowedustoobservethevariability
+andstabilityoftheUGV’sperformance,particularlywhencomparingtheefficacyofthe
+EKFwithandwithoutEmlidREACHM+GPSintegration. RMSEanalysisasaresultof
+thisapproachispresentedinTable6.
+Figure17.TheEKF-applieddatawithandwithoutGPSwhiletheUGVwasfollowingtheline.
+Figure 18. The EKF-applied data with and without GPS while the UGV was following the U-
+shapedtrajectory.
+The RMSEvaluesfromtheserepeatedexperimentshavebeensystematicallyorga-
+nizedintoatable,offeringaclearandcomprehensiveviewoftheimpactofpathcomplexity
+andnavigationalaidsontheUGV’strajectoryadherence. Thediscrepanciesnotedinthe
+UGV’strajectoryadherence, indicatedbythe RMSE values, canbepartlyattributedto
+challengesintheautonomouscontrolalgorithm,impactingitsabilitytopreciselyfollow
+thedesignatedpath.
+Drones2025,9,507 21of23
+Table6.RMSEanalysisofdronenavigationinautonomousgeometricflightmodes.
+Shape TestNo. SensorDataType RootMeanSquareError(m)
+EKF 0.2341
+1
+EKFwithGPS 0.2084
+EKF 0.0655
+2
+EKFwithGPS 0.0615
+EKF 0.0947
+Line 3
+EKFwithGPS 0.0720
+EKF 0.0655
+4
+EKFwithGPS 0.0642
+EKF 0.0944
+5
+EKFwithGPS 0.0878
+EKF 0.3972
+1
+EKFwithGPS 0.3786
+EKF 0.3112
+2
+EKFwithGPS 0.2516
+EKF 0.3736
+U-shaped 3
+EKFwithGPS 0.3893
+EKF 0.3684
+4
+EKFwithGPS 0.3398
+EKF 0.4148
+5
+EKFwithGPS 0.3683
+9. Conclusions
+Inthisstudy,theenhancementofcollectivemovementcapabilitiesinheterogeneous
+mobilerobotsthroughinformationsharinganddatafusionwasinvestigated. TheEKFwas
+employedforsensorfusion,focusingonimprovedlocalizationaccuracy.
+Statisticalanalyseswerecarriedouttoassesstheoutcomes,withtheintegrationof
+acooperativelocalizationalgorithmenablingcommunicationbetweenquadcoptersand
+unmannedgroundvehicles.
+Simulationresultsslightlyoutperformedexperimentaloutcomes,yetthedifferences
+werenotmarkedlysignificant. Notably,theimplementationoftheEKFwithGPSconsis-
+tentlyyieldedbetterresultscomparedtotheEKFwithoutGPSinobject-freeenvironments,
+affirmingGPS’sroleinenhancingnavigationalprecision.
+Furthermore,dataprocessedwiththeEKFdemonstratedaclearimprovementover
+non-EKFdata,indicatingtheefficacyofsensorfusioninroboticnavigation. Thesefindings
+alsopositivelyinfluencedthecooperativelocalizationaspectofourresearch,suggesting
+thatenhancedindividuallocalizationthroughEKFandGPSintegrationcansignificantly
+contributetotheoverallimprovementofcooperativenavigationandcoordinationamong
+heterogeneousroboticplatforms.
+Forfuturework,conductingreal-worldexperimentswithautonomousdroneflights
+presentsapromisingavenue. Thisapproachwouldenableamorecomprehensiveevalua-
+tionofEKFperformanceinpracticalscenarios.
+AuthorContributions: Conceptualization,S.Ö.;Software,A.M.K.;Validation,A.M.K.;Writing—
+originaldraft,E.O.K.;Writing—review&editing,E.O.K.;Supervision,S.Ö.;Projectadministration,
+S.Ö.Allauthorshavereadandagreedtothepublishedversionofthemanuscript.
+Drones2025,9,507 22of23
+Funding:ThisworkwassupportedbytheUTOPIA(AutomatedOpenPrecisionFarmingPlatform)
+Project,co-fundedbyTUBITAK1071(ProjectNo:120N785)andtheEuropeanUnion’sHorizon2020
+researchandinnovationprogramundergrantagreementNo862665ERA-NETICT-AGRI-FOOD.
+ThisworkwasalsosupportedbyBog˘aziçiUniversityResearchFund(GrantNumber16883)through
+theMARE(Multi-AgentRobotEnvironment)Project.
+DataAvailabilityStatement:Therawdatasupportingtheconclusionsofthisarticlewillbemade
+availablebytheauthorsonrequest.
+ConflictsofInterest:Theauthorsdeclarenoconflictofinterest.
+References
+1. Islam,N.;Rashid,M.M.;Pasandideh,F.;Ray,B.;Moore,S.;Kadel,R.AReviewofApplicationsandCommunicationTechnologies
+forInternetofThings(IoT)andUnmannedAerialVehicle(UAV)BasedSustainableSmartFarming.Sustainability2021,13,1821.
+[CrossRef]
+2. Muchiri,G.;Kimathi,S.AReviewofApplicationsandPotentialApplicationsofUAV.InProceedingsoftheSustainableResearch
+andInnovationConference,Pretoria,SouthAfrica,20–24June2022;pp.280–283.
+3. Matese,A.;DiGennaro,S.F.PracticalApplicationsofaMultisensorUAVPlatformBasedonMultispectral,ThermalandRGB
+HighResolutionImagesinPrecisionViticulture.Agriculture2018,8,116.[CrossRef]
+4. Salamí,E.;Barrado,C.;Pastor,E.UAVFlightExperimentsAppliedtotheRemoteSensingofVegetatedAreas.RemoteSens.2014,
+6,11051–11081.[CrossRef]
+5. Desai,A.;Dreossi,T.;Seshia,S.A.CombiningModelCheckingandRuntimeVerificationforSafeRobotics.InProceedingsofthe
+RuntimeVerification:17thInternationalConference,Seattle,WA,USA,13–16September2017;pp.172–189.
+6. Lamping, A.P.; Ouwerkerk, J.N.; Cohen, K.Multi-UAVControlandSupervisionwithROS.InProceedingsoftheAviation
+Technology,Integration,andOperationsConference,Atlanta,GA,USA,25–29June2018;p.4245.
+7. Garcia,S.;MLópez,E.;Barea,R.;Bergasa,L.M.;Gómez,A.;Molinos,E.J.IndoorSLAMforMicroAerialVehiclesControlUsing
+MonocularCameraandSensorFusion. InProceedingsoftheInternationalConferenceonAutonomousRobotSystemsand
+Competitions(ICARSC),Bragança,Portugal,4–6May2016;pp.205–210.
+8. Huang,R.;Tan,P.;Chen,B.M.MonocularVision-BasesAutonomousNavigationSystemonaToyQuadcopterinUnknown
+Environments. InProceedingsoftheInternationalConferenceonUnmannedAircraftSystems(ICUAS),Denver,CO,USA,
+9–12June2015;pp.1260–1269.
+9. Feng, L.; Fangchao, Q. Research on the Hardware Structure Characteristics and EKF Filtering Algorithm of the Autopilot
+PIXHAWK.InProceedingsoftheSixthInternationalConferenceonInstrumentation&Measurement,Computer,Communication
+andControl(IMCCC),Harbin,China,21–23July2016;pp.228–231.
+10. Bugallo,M.F.;Xu,S.;Djuric´,P.M.PerformanceComparisonofEKFandParticleFilteringMethodsforManeuveringTargets.Digit.
+SignalProcess.2007,17,774–786.[CrossRef]
+11. Minaeian,S.;Liu,J.;Son,Y.J.Vision-BasedTargetDetectionandLocalizationviaaTeamofCooperativeUAVandUGVs.IEEE
+Trans.Syst.ManCybern.Syst.2015,46,1005–1016.[CrossRef]
+12. Kurazume,R.;Nagata,S.;Hirose,S.CooperativePositioningwithMultipleRobots. InProceedingsoftheIEEEInternational
+ConferenceonRoboticsandAutomation,SanDiego,CA,USA,8–13May1994;pp.1250–1257.
+13. Rekleitis,I.;Dudek,G.;Milios,E.Multi-RobotCollaborationforRobustExploration. Ann. Math. Artif. Intell. 2001,31,7–40.
+[CrossRef]
+14. Roumeliotis, S.I.; Bekey, G.A. Collective Localization: A Distributed Kalman Filter Approach to Localization of Groups of
+MobileRobots. InProceedingsoftheIEEEInternationalConferenceonRoboticsandAutomation,SanFrancisco,CA,USA,
+24–28April2000;Volume3,pp.2958–2965.
+15. Nerurkar,E.D.; Roumeliotis,S.I.; Martinelli,A.DistributedMaximumaPosterioriEstimationforMulti-RobotCooperative
+Localization.InProceedingsoftheIEEEInternationalConferenceonRoboticsandAutomation,Kobe,Japan,12–17May2009;
+pp.1402–1409.
+16. Ahmadinia,M.;Alinejad-Rokny,H.;Ahangarikiasari,H.DataAggregationinWirelessSensorNetworksBasedonEnvironmental
+Similarity:ALearningAutomataApproach.J.Netw.2014,9,2567.[CrossRef]
+17. Karam,N.;Chausse,F.;Aufrere,R.;Chapuis,R.LocalizationofaGroupofCommunicatingVehiclesbyStateExchange. In
+ProceedingsoftheIEEE/RSJInternationalConferenceonIntelligentRobotsandSystems,Beijing,China,9–15October2006;
+pp.519–524.
+18. Prorok,A.;Bahr,A.;Martinoli,A.Low-CostCollaborativeLocalizationforLarge-ScaleMulti-RobotSystems.InProceedingsof
+theIEEEInternationalConferenceonRoboticsandAutomation,SaintPaul,MN,USA,14–18May2012;pp.4236–4241.
+Drones2025,9,507 23of23
+19. Mourikis,A.I.; Roumeliotis,S.I.PerformanceAnalysisofMultirobotCooperativeLocalization. IEEETrans. Robot. 2006,22,
+666–681.[CrossRef]
+20. Julier,S.J.;Uhlmann,J.K.ANon-DivergentEstimationAlgorithminthePresenceofUnknownCorrelations.InProceedingsofthe
+AmericanControlConference,Albuquerque,NM,USA,6June1997;Volume4,pp.2369–2373.
+21. Carillo-Arce,L.C.;Nerurkar,E.D.;Gordillo,J.L.;Roumeliotis,S.I.DecentralizedMulti-RobotCooperativeLocalizationUsing
+CovarianceIntersection. InProceedingsoftheIEEE/RSJInternationalConferenceonIntelligentRobotandSystems,Tokyo,
+Japan,3–7November2013;pp.1412–1417.
+Disclaimer/Publisher’sNote: Thestatements, opinionsanddatacontainedinallpublicationsaresolelythoseoftheindividual
+author(s)andcontributor(s)andnotofMDPIand/ortheeditor(s).MDPIand/ortheeditor(s)disclaimresponsibilityforanyinjuryto
+peopleorpropertyresultingfromanyideas,methods,instructionsorproductsreferredtointhecontent.
