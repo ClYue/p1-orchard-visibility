@@ -14,3 +14,10 @@ _backup_*
 # 第三方论文全文与临时脚本不入库
 _ref_*.txt
 _run_*.py
+
+# 投稿前的渲染校验页图：体积大、无长期价值，只在本地留存。
+# 目录内的纯文本 diff / 说明仍入库。
+**/.qa_revision/*.png
+**/.qa_revision/*.jpg
+**/.qa_revision/*.pdf
+**/.qa_revision/*.docx

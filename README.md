@@ -1,8 +1,8 @@
-# Does Visibility Modeling Change UAV Viewpoint Selection?
+# Canopy Visibility Constrains UAV Viewpoint Selection
 
 Code and data accompanying the manuscript:
 
-> **Does Visibility Modeling Change UAV Viewpoint Selection? A Controlled Study in Simulated Orchards**
+> **Canopy Visibility Constrains UAV Viewpoint Selection: A Simulation Study in Orchards**
 > Chunlong Yue, Qian Li, Junyi Zhang, Kaikai Zhou, Bo Peng
 > College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou, China
 
@@ -18,11 +18,11 @@ Code and data accompanying the manuscript:
 ```bash
 cd simulation
 pip install -r requirements.txt
-python run_study.py          # ~80 s, writes results/study.json
-python plot_study.py         # regenerates Figures 1-3
+python run_study.py          # Recomputes the 50 s main study
+python plot_publication.py   # Regenerates Figures 1–4 from the saved data
 ```
 
-The full reproduction, including the trial-length and crown-width sweeps, is described in `revised/README.md`.
+The [simulation README](simulation/README.md) lists the commands for the trial-length and crown-width cases.
 
 ## What the first version got wrong
 
