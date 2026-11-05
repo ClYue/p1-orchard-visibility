@@ -1,80 +1,35 @@
-# Visibility-Calibrated Observation Positioning for UAV-Assisted Ground Localization in Orchards
+# Does Visibility Modeling Change UAV Viewpoint Selection?
 
-Code, calibrated visibility tables, and Gazebo assets accompanying the manuscript:
+Code and data accompanying the manuscript:
 
-> **Where to Look Outweighs Frequency: Visibility-Calibrated Viewpoint Selection for Orchard UAV Ground Localization**
+> **Does Visibility Modeling Change UAV Viewpoint Selection? A Controlled Study in Simulated Orchards**
 > Chunlong Yue, Qian Li, Junyi Zhang, Kaikai Zhou, Bo Peng
 > College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou, China
 
-## What this repository contains
+## Repository layout
 
 | Directory | Contents |
 |---|---|
-| `code/` | The numerical simulator and the three sweep drivers (Pareto, joint heading–position, baseline station-distance) |
-| `data/` | `vis_lut.npz` — the calibrated visibility lookup tables for both scenarios — and all result JSON files behind the tables in Section 3 |
-| `figures/` | The eight manuscript figures (600 dpi PNG) and the scripts that generate them |
-| `gazebo/` | A Gazebo Fortress world with the 126-tree parameterised orchard, a differential-drive platform with a 1.0 m marker baseline, and the world generator |
-| `docs/` | The method note (Chinese) and the manuscript source |
-
-**Scope note.** Every quantitative result in the manuscript comes from the numerical simulator in `code/`.
-The Gazebo assets fix the orchard geometry in executable form and allow the ray-casting calibration to be
-re-run; they are **not** used to produce the numbers in Section 3. No field data are included, because no
-field campaign has been performed — this is stated in Section 4.5 of the manuscript.
+| `revised/` | **The current version.** Simulation, plotting code, calibrated priors, seed-level results, figures, and the manuscript. This is what the paper reports. |
+| `archive_v1/` | An earlier study of the same problem, superseded and kept for reference only. It is **not** the source of any number in the manuscript. |
 
 ## Quick start
 
-Requires Python ≥ 3.10 with `numpy`, `scipy`, `matplotlib`.
-
 ```bash
+cd revised
 pip install -r requirements.txt
-
-# main comparison, packet-loss sweep, and fusion consistency (15 seeds)
-python code/p1_sim.py --vis lut --case alley_center --wpos 0.2 --seeds 15
-python code/p1_sim.py --vis lut --case canopy_edge  --wpos 0.2 --seeds 15
-
-# accuracy–range Pareto sweep
-python code/p1_pareto_sweep.py
-
-# joint heading–position weight sweep
-python code/p1_joint_sweep.py
-
-# station-tuned baselines
-python code/p1_baseline_sweep.py
+python run_study.py          # ~80 s, writes results/study.json
+python plot_study.py         # regenerates Figures 1-3
 ```
 
-### Path adjustments
+The full reproduction, including the trial-length and crown-width sweeps, is described in `revised/README.md`.
 
-The scripts were developed inside a larger project tree. When running from this repository, adjust these
-constants to match the layout above:
+## Why the earlier version was replaced
 
-| File | Constant | Point it to |
-|---|---|---|
-| `code/p1_sim.py` | `--lut` argument / `OUT` | `data/vis_lut.npz`; results written next to the script |
-| `figures/figs_3to8.py` | `VIZ`, `CODE` | `figures/` and `data/` of this repository |
-| `figures/export_fig_data.py` | `E1_DIR` | `data/` of this repository |
-| `figures/fig1_schematic.py`, `fig2_identifiability.py` | `OUT` | `figures/` |
+`archive_v1/` generated marker detections by consulting the same visibility lookup table that the planner used to choose its station. A policy was therefore scored against its own prior, which flatters the adaptive strategy and is easy to miss on inspection.
 
-The result JSON files in `data/` are the exact files used for the manuscript tables, so the figures can be
-regenerated without re-running any simulation.
+`revised/` separates the two. The planner is given a prior; detections are drawn from ray intersections computed at the true marker positions in a fixed orchard. The effect is not cosmetic: under the old arrangement the adaptive policy appeared to beat a tuned fixed station, and under the new one it does not. The corrected comparison is the subject of the manuscript, which reports a trade in flight distance rather than a dominance in accuracy.
 
-## Regenerating the Gazebo world
+## License and citation
 
-```bash
-python gazebo/tools/gen_orchard.py     # writes the 126-tree orchard world
-```
-
-Tested with Gazebo Fortress 6.18 and ROS 2 Humble (`ros_gz`). The world runs headless; see
-`gazebo/tools/test_m3.sh` for the cmd_vel drive check.
-
-## Citation
-
-If you use the calibrated visibility tables or the simulator, please cite the manuscript once it is published.
-Until then, cite this repository.
-
-## License
-
-MIT — see `LICENSE`.
-
-## Contact
-
-Chunlong Yue — edwardyue2011@gmail.com — ORCID: [0009-0009-1272-7294](https://orcid.org/0009-0009-1272-7294)
+See `LICENSE`. The archived version is retained so that the correction described above can be checked by anyone who has cited the earlier results.
