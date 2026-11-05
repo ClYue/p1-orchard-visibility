@@ -18,6 +18,7 @@ GRID = np.arange(-15.0, 15.01, 0.5)
 ANGLES = np.arange(20) * 2 * np.pi / 20
 OFFSETS = (np.array(RADII)[:, None, None] *
            np.stack((np.cos(ANGLES), np.sin(ANGLES)), axis=-1)).reshape(-1, 2)
+X_EXTENT = max(50.0, 0.6 * STEPS * DT + 10.0)   # trees must reach the end of the run
 SCENES = {"center": 0.0, "edge": 1.0}
 WEIGHTS = (0, 0.00025, 0.001, 0.004)
 
@@ -44,7 +45,7 @@ def measure(uav, pose):
 
 
 def orchard(rng):
-    x, y = np.meshgrid(np.arange(-18.0, 50.01, 2.0), [-14, -10, -6, -2, 2, 6, 10, 14])
+    x, y = np.meshgrid(np.arange(-18.0, X_EXTENT + 0.01, 2.0), [-14, -10, -6, -2, 2, 6, 10, 14])
     xy = np.stack((x.ravel(), y.ravel()), axis=-1) + rng.normal(0, 0.15, (x.size, 2))
     return np.column_stack((xy, np.full(x.size, 2.0)))
 
@@ -198,7 +199,7 @@ def run_scene(offset, seeds):
         q = np.diag([(DT * v[k] * 0.03)**2] * 2 + [(DT * 0.01)**2, (2e-5)**2])
         covariance = f @ covariance @ np.swapaxes(f, -1, -2) + q
         # Trees remain fixed in world coordinates. Prune only impossible intersections.
-        nominal_x = np.arange(-18.0, 50.01, 2.0)
+        nominal_x = np.arange(-18.0, X_EXTENT + 0.01, 2.0)
         column = np.tile(np.abs(nominal_x - x[k + 1]) < 13., 8)
         local_trees = trees[:, column, :]
         true_pose = truth[k + 1]
@@ -240,8 +241,13 @@ def run_scene(offset, seeds):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seeds", type=int, default=30)
+    parser.add_argument("--steps", type=int, default=None,
+                       help="override STEPS; 250 = 50 s, 750 = 150 s")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parent / "results")
     args = parser.parse_args()
+    if args.steps is not None:
+        globals()["STEPS"] = args.steps
+        globals()["X_EXTENT"] = max(50.0, 0.6 * args.steps * DT + 10.0)
     if args.seeds < 1:
         parser.error("--seeds must be positive")
     args.output.mkdir(parents=True, exist_ok=True)

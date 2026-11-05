@@ -54,6 +54,43 @@ def main():
     axes[0, 1].legend(loc="best", fontsize=8)
     save(fig, "figure2_tradeoffs")
 
+    figure3(study)
+
+
+def figure3(study):
+    """Heading error versus station azimuth at a fixed 2 m distance."""
+    colors = {"center": "#007e80", "edge": "#b35228"}
+    markers = {"center": "o", "edge": "s"}
+    fig, ax = plt.subplots(figsize=(6.6, 3.4), layout="constrained")
+    for name, scene in study["scenes"].items():
+        rows = [r for r in scene["results"]
+                if r["model"] == "fixed" and abs(r["radius"] - 2.0) < 1e-6]
+        rows.sort(key=lambda r: r["angle"])
+        ang = np.array([r["angle"] for r in rows])
+        head = np.array([r["mean"][1] for r in rows])
+        det = np.array([r["mean"][3] for r in rows])
+        ax.plot(ang, head, "-", color=colors[name], lw=1.4, zorder=2, label=NAMES[name])
+        sc = ax.scatter(ang, head, c=det, cmap="viridis", vmin=0, vmax=1, s=46,
+                        marker=markers[name], edgecolors=colors[name], linewidths=1.0, zorder=3)
+        i = int(np.argmin(head))
+        ax.annotate(f"{head[i]:.2f}\u00b0", (ang[i], head[i]), fontsize=7.5,
+                    color=colors[name], xytext=(6, -14), textcoords="offset points")
+    ax.set_yscale("log")
+    ax.set_xticks(range(0, 360, 45))
+    ax.set_xticklabels([f"{a}\u00b0" for a in range(0, 360, 45)])
+    ax.set_xlabel("Station azimuth in the vehicle frame (0\u00b0 = behind, along the row)")
+    ax.set_ylabel("Heading RMSE (\u00b0)")
+    ax.set_ylim(0.25, 20)
+    ax.set_yticks([0.3, 0.5, 1, 2, 5, 10])
+    ax.set_yticklabels(["0.3", "0.5", "1", "2", "5", "10"])
+    ax.grid(axis="y", color="#dddddd", lw=0.5, which="major")
+    ax.legend(frameon=False, loc="upper left", fontsize=8.5)
+    ax.axvspan(30, 150, color="#b35228", alpha=0.06, zorder=0)
+    cb = fig.colorbar(sc, ax=ax, pad=0.02, fraction=0.045)
+    cb.set_label("Pair detection fraction", fontsize=8)
+    cb.ax.tick_params(labelsize=7)
+    save(fig, "figure3_azimuth")
+
 
 if __name__ == "__main__":
     main()

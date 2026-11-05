@@ -35,6 +35,12 @@ CFG = dict(
     w_pos=0.0,          # 位置项权重（双目标扩展；0 = 仅航向，与旧结果一致）
     baseline_r=10.0,    # B/C 基线的固定观测站距（m）
     q2_mult=10.0,
+    # 2026-11-05 新增：行间轨迹约束。原轨迹 150 s 内横向位移达约 49 m，
+    # 而树行间距仅 4 m —— 车会横穿多行，与果园作业实际不符，也使
+    # "按相对位移查询一张 LUT" 的假设失效。lane_half 为允许偏离行中线的半宽。
+    lane_half=1.5,      # 允许偏离行中线的半宽（m，仅作参考）
+    lane_sway=0.35,     # 沿行蛇形目标的航向幅值（rad，约 ±20°）
+    lane_gain=1.5,      # 航向跟踪增益
 )
 ANG = np.linspace(-math.pi, math.pi, 20, endpoint=False)
 RAD = np.array([2.0, 3.0, 4.5, 6.5, 9.0, 12.0])
@@ -176,7 +182,11 @@ def run(name, seed, p_loss=0.0, record=False):
     for k in range(N):
         t = k * dt
         v = CFG["v0"] * (1.0 + 0.05 * math.sin(2 * math.pi * t / 17.0))
-        w = 0.30 * math.sin(2 * math.pi * t / 30.0)
+        # 沿行作业轨迹：航向跟踪一个慢幅蛇形目标，位置保持在行内。
+        # 原实现为自由积分（150 s 内转向达 ±82°、横向约 49 m），车会横穿多行，
+        # 与果园作业实际不符，也使"按相对位移查一张 LUT"的假设失效。
+        th_des = CFG["lane_sway"] * math.sin(2 * math.pi * t / 30.0)
+        w = CFG["lane_gain"] * (th_des - xt[2])
         xt[0] += dt * v * math.cos(xt[2]); xt[1] += dt * v * math.sin(xt[2]); xt[2] += dt * w
         b_true += dt * CFG["bias_rw"] * rng.standard_normal()
 
@@ -262,7 +272,11 @@ def run_metrics(name, seed, p_loss=0.0):
     for k in range(N):
         t = k * dt
         v = CFG["v0"] * (1.0 + 0.05 * math.sin(2 * math.pi * t / 17.0))
-        w = 0.30 * math.sin(2 * math.pi * t / 30.0)
+        # 沿行作业轨迹：航向跟踪一个慢幅蛇形目标，位置保持在行内。
+        # 原实现为自由积分（150 s 内转向达 ±82°、横向约 49 m），车会横穿多行，
+        # 与果园作业实际不符，也使"按相对位移查一张 LUT"的假设失效。
+        th_des = CFG["lane_sway"] * math.sin(2 * math.pi * t / 30.0)
+        w = CFG["lane_gain"] * (th_des - xt[2])
         xt[0] += dt * v * math.cos(xt[2]); xt[1] += dt * v * math.sin(xt[2]); xt[2] += dt * w
         b_true += dt * CFG["bias_rw"] * rng.standard_normal()
 
@@ -342,7 +356,11 @@ def run_consistency(seed):
     for k in range(N):
         t = k * dt
         v = CFG["v0"] * (1.0 + 0.05 * math.sin(2 * math.pi * t / 17.0))
-        w = 0.30 * math.sin(2 * math.pi * t / 30.0)
+        # 沿行作业轨迹：航向跟踪一个慢幅蛇形目标，位置保持在行内。
+        # 原实现为自由积分（150 s 内转向达 ±82°、横向约 49 m），车会横穿多行，
+        # 与果园作业实际不符，也使"按相对位移查一张 LUT"的假设失效。
+        th_des = CFG["lane_sway"] * math.sin(2 * math.pi * t / 30.0)
+        w = CFG["lane_gain"] * (th_des - xt[2])
         xt[0] += dt * v * math.cos(xt[2]); xt[1] += dt * v * math.sin(xt[2]); xt[2] += dt * w
         tgt = policy_ours(e1[0], e1[1], e1[2], P1, u)
         d = tgt - u; nd = float(np.linalg.norm(d)); step = CFG["uav_vmax"] * dt
