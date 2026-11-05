@@ -33,5 +33,5 @@ Sincerely,
 **Chunlong Yue**
 College of Energy and Intelligent Engineering
 Henan University of Animal Husbandry and Economy, Zhengzhou 450046, China
-edwardyue2011@gmail.com
+ycl@hnuahe.edu.cn
 ORCID: 0009-0009-1272-7294
