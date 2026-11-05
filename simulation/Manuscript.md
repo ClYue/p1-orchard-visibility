@@ -1,9 +1,9 @@
 # Canopy Visibility Constrains UAV Viewpoint Selection: A Simulation Study in Orchards
 
-**Chunlong Yue¹\*, Qian Li¹, Junyi Zhang¹, Kaikai Zhou¹ and Bo Peng¹**
+**Chunlong Yue¹\*, Qian Li¹, Junyi Zhang¹\*, Kaikai Zhou¹ and Bo Peng¹**
 
 ¹ College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou 450046, China  
-\* Correspondence: ycl@hnuahe.edu.cn. ORCID: 0009-0009-1272-7294.
+\* Correspondence: ycl@hnuahe.edu.cn (C.Y.); 80827@hnuahe.edu.cn (J.Z.). ORCID: 0009-0009-1272-7294 (C.Y.).
 
 **Abstract.** An aerial camera can help localize a ground robot under orchard canopies, provided that its viewpoint offers useful measurement geometry and a clear view of the robot. We compare fixed and adaptive viewpoints for a UAV observing two markers on a ground robot in a simulated hedgerow orchard, with detections drawn from ray intersections at the true marker positions. A one-step policy combines predicted position and heading uncertainty with flight distance, driven by three representations of the field: ray-cast lookup, bounded Gaussian, constant prior. On the alley centerline a station 2 m behind the vehicle reaches 0.359° heading error and the azimuths available at that distance span a factor of 2.1; the axial corridor stays fully visible. Offsetting the path 1 m toward a row makes the field asymmetric: the nadir probability falls to 0.339, the near-side direction becomes unusable at every distance, and azimuths at a fixed 2 m now span 0.562° to 8.792°—a factor of 15.6, against 6.3 for distance over the usable range. At equal flight distance the lookup-table policy costs 0.187° of heading accuracy for 4.87 m of flight. Canopy visibility matters most where it is asymmetric; there a tuned oblique station stays competitive.
 

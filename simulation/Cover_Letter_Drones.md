@@ -24,7 +24,7 @@ We submit the above manuscript for consideration as an Article in *Drones*.
 
 **Why *Drones*.** The manuscript concerns where an aerial platform should station itself to serve a ground task, which sits within the journal's scope in navigation, mission planning and agricultural operation. *Drones* has published UAV–UGV cooperative localization work, and the questions raised here—station geometry, occlusion, the cost of adaptivity—extend that line rather than duplicating it. We have also been explicit about the limits: this is a simulation study with idealized ground paths, a known UAV pose and ray-based detection, and the manuscript states what a field validation would require.
 
-**Declarations.** The manuscript has not been published previously and is not under consideration elsewhere. All authors have read and approved the submitted version and agree to its submission to *Drones*. The authors declare no conflicts of interest. The simulation code, calibrated priors and seed-level outputs are provided as supplementary material and archived at https://github.com/ClYue/p1-orchard-visibility.
+**Declarations.** The manuscript has not been published previously and is not under consideration elsewhere. All authors have read and approved the submitted version and agree to its submission to *Drones*. Chunlong Yue and Junyi Zhang are the corresponding authors. The authors declare no conflicts of interest. The simulation code, calibrated priors and seed-level outputs are provided as supplementary material and archived at https://github.com/ClYue/p1-orchard-visibility.
 
 We would be glad to suggest reviewers with expertise in aerial–ground cooperative localization, agricultural robotics or observability-aware planning if that would be helpful.
 
