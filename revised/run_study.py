@@ -19,6 +19,7 @@ ANGLES = np.arange(20) * 2 * np.pi / 20
 OFFSETS = (np.array(RADII)[:, None, None] *
            np.stack((np.cos(ANGLES), np.sin(ANGLES)), axis=-1)).reshape(-1, 2)
 X_EXTENT = max(50.0, 0.6 * STEPS * DT + 10.0)   # trees must reach the end of the run
+CROWN_B = 1.2   # across-row semi-axis of each crown (m); swept below
 SCENES = {"center": 0.0, "edge": 1.0}
 WEIGHTS = (0, 0.00025, 0.001, 0.004)
 
@@ -56,7 +57,7 @@ def pair_probability(uav, marker_xy, trees):
     Independent detections conditional on geometry and ray transmittances.
     Overlapping ellipsoids contribute additive optical depth.
     """
-    radius = np.array([1.2, 1.2, 1.5])
+    radius = np.array([1.2, CROWN_B, 1.5])
     start = np.concatenate((marker_xy, np.full((*marker_xy.shape[:-1], 1), 0.3)), axis=-1)
     end = np.concatenate((uav, np.full((*uav.shape[:-1], 1), 6.0)), axis=-1)
     ray = end[..., None, :] - start
@@ -241,10 +242,14 @@ def run_scene(offset, seeds):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seeds", type=int, default=30)
+    parser.add_argument("--crown-b", type=float, default=None,
+                       help="across-row crown semi-axis in metres (default 1.2)")
     parser.add_argument("--steps", type=int, default=None,
                        help="override STEPS; 250 = 50 s, 750 = 150 s")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parent / "results")
     args = parser.parse_args()
+    if args.crown_b is not None:
+        globals()["CROWN_B"] = args.crown_b
     if args.steps is not None:
         globals()["STEPS"] = args.steps
         globals()["X_EXTENT"] = max(50.0, 0.6 * args.steps * DT + 10.0)

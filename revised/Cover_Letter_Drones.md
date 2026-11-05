@@ -1,6 +1,6 @@
 # Cover letter
 
-**Manuscript:** Visibility-Aware UAV Viewpoint Selection for Ground Robot Localization in Simulated Orchards
+**Manuscript:** Does Visibility Modeling Change UAV Viewpoint Selection? A Controlled Study in Simulated Orchards
 **Article type:** Article
 **Journal:** *Drones*
 

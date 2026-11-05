@@ -46,6 +46,16 @@ The ordering of the policies is unchanged and the gap widens:
 
 A longer run helps both strategies, because more observations accumulate, but it helps the fixed station more: the adaptive penalty grows from 0.083° to 0.159° at the center and from 0.187° to 0.243° at the edge. The tree rows extend automatically with the horizon, so the platform never leaves the orchard.
 
+## Crown width
+
+The across-row crown semi-axis is exposed as a parameter, so the visibility field can be swept without editing the code:
+
+```sh
+python run_study.py --crown-b 1.8 --output results_crown_b1.8
+```
+
+Four widths are reported: 1.2 m (`results/`), and 1.5, 1.8 and 2.0 m (`results_crown_b*/`). Widening the crown drives the nadir probability at the edge from 0.339 to 0.018 and the across-row half-visibility distance from 4.5 m to zero, while the best fixed station degrades from 0.562° to 1.396°. The adaptive penalty at matched flight distance narrows but never reverses.
+
 ## Paired confidence intervals
 
 To reproduce the edge intervals, subtract the per-seed samples of the 225°, 2 m fixed station from the samples of the lookup-table policy at weight 0.001. With `numpy.random.default_rng(91)`, draw 5,000 rows of 30 seed indices with replacement, take the mean paired difference for each row, and report its 2.5th and 97.5th percentiles.
