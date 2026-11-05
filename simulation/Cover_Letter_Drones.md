@@ -1,6 +1,6 @@
 # Cover letter
 
-**Manuscript:** Does Visibility Modeling Change UAV Viewpoint Selection? A Controlled Study in Simulated Orchards
+**Manuscript:** Canopy Visibility Constrains UAV Viewpoint Selection: A Simulation Study in Orchards
 **Article type:** Article
 **Journal:** *Drones*
 
