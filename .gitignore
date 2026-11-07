@@ -21,3 +21,8 @@ _run_*.py
 **/.qa_revision/*.jpg
 **/.qa_revision/*.pdf
 **/.qa_revision/*.docx
+
+# 审阅材料：保留报告与复算脚本，排除重复的图片副本与压缩包
+simulation/review_20261106/figures_codex_20261106/
+simulation/review_20261106/*.zip
+simulation/review_20261106/figures/
