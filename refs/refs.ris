@@ -1,0 +1,567 @@
+TY  - JOUR
+AU  - Feng, T.
+AU  - Chen, S.
+AU  - Feng, Z.
+AU  - Shen, C.
+AU  - Tian, Y.
+TI  - Effects of canopy and multi-epoch observations on single-point positioning errors of a GNSS in coniferous and broadleaved forests
+JO  - Remote Sensing
+PY  - 2021
+VL  - 13
+SP  - 2325
+DO  - 10.3390/rs13122325
+ER  - 
+
+TY  - JOUR
+AU  - Japertas, S.
+AU  - Mažeika, M.
+TI  - The influence of tree canopy on GPS positioning accuracy
+JO  - Scientific Reports
+PY  - 2026
+VL  - 16
+SP  - 35943
+DO  - 10.1038/s41598-026-68024-5
+ER  - 
+
+TY  - JOUR
+AU  - Tomaštík, J.
+AU  - Everett, T.
+TI  - Static positioning under tree canopy using low-cost GNSS receivers and adapted RTKLIB software
+JO  - Sensors
+PY  - 2023
+VL  - 23
+SP  - 3136
+DO  - 10.3390/s23063136
+ER  - 
+
+TY  - JOUR
+AU  - Han, J.-h.
+AU  - Park, C.-h.
+AU  - Jang, Y.Y.
+AU  - Gu, J.D.
+AU  - Kim, C.Y.
+TI  - Performance evaluation of an autonomously driven agricultural vehicle in an orchard environment
+JO  - Sensors
+PY  - 2022
+VL  - 22
+SP  - 114
+DO  - 10.3390/s22010114
+ER  - 
+
+TY  - JOUR
+AU  - Zhou, H.
+AU  - Wang, J.
+AU  - Chen, Y.
+AU  - Hu, L.
+AU  - Li, Z.
+AU  - Xie, F.
+AU  - He, J.
+AU  - Wang, P.
+TI  - Neural network-based SLAM/GNSS fusion localization algorithm for agricultural robots in orchard GNSS-degraded or denied environments
+JO  - Agriculture
+PY  - 2025
+VL  - 15
+SP  - 1612
+DO  - 10.3390/agriculture15151612
+ER  - 
+
+TY  - JOUR
+AU  - Gao, P.
+AU  - Fang, J.
+AU  - He, J.
+AU  - Ma, S.
+AU  - Wen, G.
+AU  - Li, Z.
+TI  - GRU–Transformer hybrid model for GNSS/INS integration in orchard environments
+JO  - Agriculture
+PY  - 2025
+VL  - 15
+SP  - 1135
+DO  - 10.3390/agriculture15111135
+ER  - 
+
+TY  - JOUR
+AU  - Reitbauer, E.
+AU  - Schmied, C.
+TI  - Bridging GNSS outages with IMU and odometry: a case study for agricultural vehicles
+JO  - Sensors
+PY  - 2021
+VL  - 21
+SP  - 4467
+DO  - 10.3390/s21134467
+ER  - 
+
+TY  - JOUR
+AU  - Gu, R.
+AU  - Luan, S.
+AU  - Zhao, Y.
+AU  - Zhao, S.
+AU  - Kan, X.
+AU  - Ma, Y.
+AU  - Teng, T.
+AU  - Sun, Y.
+AU  - Li, C.
+AU  - Sun, X.
+AU  - Wang, J.
+TI  - Heterogeneous agricultural robots: a review of collaborative sensing and control, challenges and opportunities
+JO  - Frontiers in Plant Science
+PY  - 2026
+SP  - 1878431
+DO  - 10.3389/fpls.2026.1878431
+ER  - 
+
+TY  - JOUR
+AU  - 耿可可
+AU  - 成小龙
+AU  - 丁鹏博
+AU  - 沈楷传
+AU  - 马天笑
+AU  - 殷国栋
+TI  - 空地协同系统关键技术发展现状综述 [Review of the Development Status of Crucial Technologies for Air-ground Collaboration System]
+JO  - 机械工程学报
+PY  - 2026
+VL  - 62
+IS  - 10
+SP  - 253
+EP  - 272
+DO  - 10.3901/JME.260208
+ER  - 
+
+TY  - JOUR
+AU  - Stegagno, P.
+AU  - Cognetti, M.
+AU  - Oriolo, G.
+AU  - Bülthoff, H.H.
+AU  - Franchi, A.
+TI  - Ground and aerial mutual localization using anonymous relative-bearing measurements
+JO  - IEEE Transactions on Robotics
+PY  - 2016
+VL  - 32
+SP  - 1133
+EP  - 1151
+DO  - 10.1109/TRO.2016.2593454
+ER  - 
+
+TY  - JOUR
+AU  - Xu, H.
+AU  - Wang, C.
+AU  - Bo, Y.
+AU  - Jiang, C.
+AU  - Liu, Y.
+AU  - Yang, S.
+AU  - Lai, W.
+TI  - An aerial and ground multi-agent cooperative location framework in GNSS-challenged environments
+JO  - Remote Sensing
+PY  - 2022
+VL  - 14
+SP  - 5055
+DO  - 10.3390/rs14195055
+ER  - 
+
+TY  - JOUR
+AU  - Tagarakis, A.C.
+AU  - Filippou, E.
+AU  - Kalaitzidis, D.
+AU  - Benos, L.
+AU  - Busato, P.
+AU  - Bochtis, D.
+TI  - Proposing UGV and UAV systems for 3D mapping of orchard environments
+JO  - Sensors
+PY  - 2022
+VL  - 22
+SP  - 1571
+ER  - 
+
+TY  - JOUR
+AU  - Peng, C.
+AU  - Fei, Z.
+AU  - Vougioukas, S.G.
+TI  - GNSS-free end-of-row detection and headland maneuvering for orchard navigation using a depth camera
+JO  - Machines
+PY  - 2023
+VL  - 11
+SP  - 84
+DO  - 10.3390/machines11010084
+ER  - 
+
+TY  - CPAPER
+AU  - Carrillo-Arce, L.C.
+AU  - Nerurkar, E.D.
+AU  - Gordillo, J.L.
+AU  - Roumeliotis, S.I.
+TI  - Decentralized multi-robot cooperative localization using covariance intersection
+T2  - 2013 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)
+CY  - Tokyo, Japan
+PY  - 2013
+SP  - 1412
+EP  - 1417
+DO  - 10.1109/IROS.2013.6696534
+ER  - 
+
+TY  - JOUR
+AU  - Huang, G.P.
+AU  - Trawny, N.
+AU  - Mourikis, A.I.
+AU  - Roumeliotis, S.I.
+TI  - Observability-based consistent EKF estimators for multi-robot cooperative localization
+JO  - Autonomous Robots
+PY  - 2011
+VL  - 30
+SP  - 99
+EP  - 122
+DO  - 10.1007/s10514-010-9207-y
+ER  - 
+
+TY  - UNPB
+AU  - Tu, C.
+AU  - Cui, X.
+AU  - Liu, G.
+AU  - Lu, M.
+TI  - Weighted covariance intersection for range-based distributed cooperative localization of multi-vehicle systems
+T2  - arXiv
+M3  - arXiv:2508.12207
+PY  - 2025
+UR  - https://arxiv.org/abs/2508.12207
+ER  - 
+
+TY  - UNPB
+AU  - Chang, T.-K.
+AU  - Chen, K.
+AU  - Mehta, A.
+TI  - Resilient and consistent multirobot cooperative localization with covariance intersection
+T2  - arXiv
+M3  - arXiv:2108.08789
+PY  - 2021
+UR  - https://arxiv.org/abs/2108.08789
+ER  - 
+
+TY  - CPAPER
+AU  - Julier, S.J.
+AU  - Uhlmann, J.K.
+TI  - A non-divergent estimation algorithm in the presence of unknown correlations
+T2  - Proceedings of the 1997 American Control Conference
+CY  - Albuquerque, NM, USA
+PY  - 1997
+VL  - 4
+SP  - 2369
+EP  - 2373
+DO  - 10.1109/ACC.1997.609105
+ER  - 
+
+TY  - JOUR
+AU  - Zhou, Y.
+AU  - Liu, Y.
+AU  - Wang, X.
+TI  - Distributed 3-D multi-robot cooperative localization: an efficient and consistent approach
+JO  - IEEE Robotics and Automation Letters
+PY  - 2026
+VL  - 11
+SP  - 2306
+DO  - 10.1109/LRA.2026.3653287
+ER  - 
+
+TY  - UNPB
+AU  - Hao, N.
+AU  - He, F.
+AU  - Tian, C.
+AU  - Yao, Y.
+AU  - Xia, W.
+TI  - KD-EKF: a consistent cooperative localization estimator based on Kalman decomposition
+T2  - arXiv
+M3  - arXiv:2210.16086
+PY  - 2022
+UR  - https://arxiv.org/abs/2210.16086
+ER  - 
+
+TY  - UNPB
+AU  - De, Q.
+AU  - Zhuang, A.
+AU  - Zhang, Y.
+AU  - Qian, Z.
+AU  - Zou, D.
+TI  - A closed-form 4-DoF inter-robot pose estimator using bearing-only measurements
+T2  - arXiv
+M3  - arXiv:2606.26616
+PY  - 2026
+UR  - https://arxiv.org/abs/2606.26616
+ER  - 
+
+TY  - UNPB
+AU  - Zheng, C.
+AU  - Guo, H.
+AU  - Zhao, S.
+TI  - A cooperative bearing-rate approach for observability-enhanced target motion estimation
+T2  - arXiv
+M3  - arXiv:2502.08089
+PY  - 2025
+UR  - https://arxiv.org/abs/2502.08089
+ER  - 
+
+TY  - UNPB
+AU  - Shin, K.
+AU  - Sim, H.
+AU  - Nam, S.
+AU  - Kim, Y.
+AU  - Hu, J.
+AU  - Kim, K.-K.K.
+TI  - Multi-robot relative pose estimation in SE(2) with observability analysis
+T2  - arXiv
+M3  - arXiv:2401.15313
+PY  - 2024
+UR  - https://arxiv.org/abs/2401.15313
+ER  - 
+
+TY  - JOUR
+AU  - De Silva, A.H.T.E.
+AU  - Katupitiya, J.
+TI  - UAV-UGV collaborative localisation with minimum sensing
+JO  - Sensors
+PY  - 2024
+VL  - 24
+SP  - 4629
+DO  - 10.3390/s24144629
+ER  - 
+
+TY  - UNPB
+AU  - Pritzl, V.
+AU  - Yu, X.
+AU  - Westerlund, T.
+AU  - Štěpán, P.
+AU  - Saska, M.
+TI  - Degradation-aware cooperative multi-modal GNSS-denied localization leveraging LiDAR-based robot detections
+T2  - arXiv
+M3  - arXiv:2510.20480
+PY  - 2025
+UR  - https://arxiv.org/abs/2510.20480
+ER  - 
+
+TY  - UNPB
+AU  - Martínez-Rozas, S.
+AU  - Alejo, D.
+AU  - Carpio, J.J.
+AU  - Caballero, F.
+AU  - Merino, L.
+TI  - Long duration inspection of GNSS-denied environments with a tethered UAV-UGV marsupial system
+T2  - arXiv
+M3  - arXiv:2505.23457
+PY  - 2025
+UR  - https://arxiv.org/abs/2505.23457
+ER  - 
+
+TY  - JOUR
+AU  - Xu, H.
+AU  - Zhao, G.
+AU  - Bo, Y.
+TI  - UAV-UGV collaborative localization in GNSS-denied large-scale environments: an anchor-free VIO-UWB fusion with adaptive weighting and outlier suppression
+JO  - Drones
+PY  - 2026
+VL  - 10
+SP  - 175
+DO  - 10.3390/drones10030175
+ER  - 
+
+TY  - JOUR
+AU  - Chen, J.
+AU  - Wang, X.
+AU  - Fang, Z.
+AU  - Gao, M.
+AU  - Xu, Y.
+AU  - Zhang, Z.
+TI  - Robust spatial georeferencing for UAV-UGV mobile mapping platforms in urban canyons via asymmetric GNSS/UWB fusion
+JO  - Remote Sensing
+PY  - 2026
+VL  - 18
+SP  - 1967
+DO  - 10.3390/rs18121967
+ER  - 
+
+TY  - UNPB
+AU  - Miller, I.D.
+AU  - Cladera, F.
+AU  - Smith, T.
+AU  - Taylor, C.J.
+AU  - Kumar, V.
+TI  - Stronger together: air-ground robotic collaboration using semantics
+T2  - arXiv
+M3  - arXiv:2206.14289
+PY  - 2022
+UR  - https://arxiv.org/abs/2206.14289
+ER  - 
+
+TY  - JOUR
+AU  - Wu, L.
+AU  - Chen, M.
+AU  - Liang, X.
+TI  - Air-ground collaborative autonomous exploration and mapping method for complex multi-grain pile environments
+JO  - Sensors
+PY  - 2026
+VL  - 26
+SP  - 2184
+DO  - 10.3390/s26072184
+ER  - 
+
+TY  - JOUR
+AU  - Boyinine, R.
+AU  - Ammapalli, J.
+AU  - Chakraborty, A.
+AU  - Sharma, R.
+AU  - Brink, K.
+AU  - Taylor, C.
+TI  - Navigating together: the CoNaV testbed and framework for benchmarking cooperative localization
+JO  - NAVIGATION
+PY  - 2025
+VL  - 72
+SP  - e722
+DO  - 10.33012/navi.722
+ER  - 
+
+TY  - JOUR
+AU  - Katikaridis, D.
+AU  - Benos, L.
+AU  - Kateris, D.
+AU  - Papageorgiou, E.
+AU  - Karras, G.
+AU  - Menexes, I.
+AU  - Berruto, R.
+AU  - Sørensen, C.G.
+AU  - Bochtis, D.
+TI  - Proactive path planning using centralized UAV-UGV coordination in semi-structured agricultural environments
+JO  - Applied Sciences
+PY  - 2026
+VL  - 16
+SP  - 1143
+DO  - 10.3390/app16021143
+ER  - 
+
+TY  - JOUR
+AU  - Akhihiero, D.
+AU  - Olawoye, U.
+AU  - Das, S.
+AU  - Gross, J.
+TI  - Cooperative localization for GNSS-denied subterranean navigation: a UAV-UGV team approach
+JO  - NAVIGATION
+PY  - 2024
+VL  - 71
+SP  - e677
+DO  - 10.33012/navi.677
+ER  - 
+
+TY  - CPAPER
+AU  - Bahr, A.
+AU  - Walter, M.R.
+AU  - Leonard, J.J.
+TI  - Consistent cooperative localization
+T2  - 2009 IEEE International Conference on Robotics and Automation (ICRA)
+CY  - Kobe, Japan
+PY  - 2009
+SP  - 3415
+EP  - 3422
+DO  - 10.1109/ROBOT.2009.5152859
+ER  - 
+
+TY  - UNPB
+AU  - Grebe, C.
+AU  - Wise, E.
+AU  - Kelly, J.
+TI  - Observability-aware trajectory optimization: theory, viability, and state of the art
+T2  - arXiv
+M3  - arXiv:2109.09007
+PY  - 2021
+UR  - https://arxiv.org/abs/2109.09007
+ER  - 
+
+TY  - CPAPER
+AU  - Böhm, C.
+AU  - Brault, P.
+AU  - Delamare, Q.
+AU  - Robuffo Giordano, P.
+AU  - Weiss, S.
+TI  - COP: Control and observability-aware planning
+T2  - 2022 International Conference on Robotics and Automation (ICRA)
+CY  - Philadelphia, PA, USA
+PY  - 2022
+SP  - 3364
+EP  - 3370
+DO  - 10.1109/ICRA46639.2022.9812373
+ER  - 
+
+TY  - UNPB
+AU  - Go, H.S.H.
+AU  - Chong, C.L.
+AU  - Qian, L.
+AU  - Liu, H.H.T.
+TI  - Observability-aware control for quadrotor formation flight with range-only measurement
+T2  - arXiv
+M3  - arXiv:2411.03747
+PY  - 2024
+UR  - https://arxiv.org/abs/2411.03747
+ER  - 
+
+TY  - JOUR
+AU  - Wang, Q.
+AU  - Li, Z.
+AU  - Peng, J.
+AU  - Lu, K.
+TI  - Bio-inspired observability enhancement method for UAV target localization and sensor bias estimation with bearing-only measurement
+JO  - Biomimetics
+PY  - 2025
+VL  - 10
+SP  - 336
+DO  - 10.3390/biomimetics10050336
+ER  - 
+
+TY  - CPAPER
+AU  - Wang, Q.
+AU  - Gao, Y.
+AU  - Ji, J.
+AU  - Xu, C.
+AU  - Gao, F.
+TI  - Visibility-aware trajectory optimization with application to aerial tracking
+T2  - IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)
+PY  - 2021
+SP  - 5249
+EP  - 5256
+DO  - 10.1109/IROS51168.2021.9636753
+ER  - 
+
+TY  - CPAPER
+AU  - Michaelson, K.
+AU  - Gandhi, M.
+AU  - Zanetti, R.
+TI  - Navigation-aware path planning and multi-agent coordination in challenging environments
+T2  - 2025 IEEE/ION Position, Location and Navigation Symposium (PLANS)
+CY  - Salt Lake City, UT, USA
+PY  - 2025
+SP  - 1319
+EP  - 1326
+DO  - 10.1109/PLANS61210.2025.11028399
+ER  - 
+
+TY  - JOUR
+AU  - Sun, P.
+AU  - Tong, S.
+AU  - Qin, K.
+AU  - Luo, Z.
+AU  - Lin, B.
+AU  - Shi, M.
+TI  - Low-cost real-time remote sensing and geolocation of moving targets via monocular bearing-only micro UAVs
+JO  - Remote Sensing
+PY  - 2025
+VL  - 17
+SP  - 3836
+DO  - 10.3390/rs17233836
+ER  - 
+
+TY  - JOUR
+AU  - Garrido-Jurado, S.
+AU  - Muñoz-Salinas, R.
+AU  - Madrid-Cuevas, F.J.
+AU  - Marín-Jiménez, M.J.
+TI  - Automatic generation and detection of highly reliable fiducial markers under occlusion
+JO  - Pattern Recognition
+PY  - 2014
+VL  - 47
+SP  - 2280
+EP  - 2292
+DO  - 10.1016/j.patcog.2014.01.005
+ER  - 

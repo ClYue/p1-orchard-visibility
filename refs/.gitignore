@@ -1,0 +1,10 @@
+# 本机 Zotero 状态与本机专用脚本：含 collection key、本机绝对路径、读取本机密钥的代码。
+# 公开仓库只放能复用的东西：refs.bib / refs.ris / refs_data.py / build_refs.py / validate_items.py
+zotero_items.json
+item_keys.json
+pdf_map.json
+zotero_result.json
+insert_zotero.py
+attach_pdfs.py
+map_pdfs.py
+verify_attachments.py
