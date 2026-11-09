@@ -26,3 +26,14 @@ _run_*.py
 simulation/review_20261106/figures_codex_20261106/
 simulation/review_20261106/*.zip
 simulation/review_20261106/figures/
+
+# 稿件与投稿材料：含作者邮箱，不进公开仓库（2026-11-09）
+# 正文、投稿信、修改记录、Word 交付件一律留在本机；仓库只放代码、数据、图。
+simulation/Manuscript*.md
+simulation/Manuscript*.docx
+simulation/Cover_Letter*.md
+simulation/Cover_Letter*.docx
+simulation/submission/*.docx
+simulation/submission/P1_*.md
+simulation/submission/.qa_revision/
+simulation/_archive/Cover_Letter*.md
