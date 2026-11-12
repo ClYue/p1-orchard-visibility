@@ -35,5 +35,22 @@ simulation/Cover_Letter*.md
 simulation/Cover_Letter*.docx
 simulation/submission/*.docx
 simulation/submission/P1_*.md
-simulation/submission/.qa_revision/
+simulation/figures/.qa_revision/
 simulation/_archive/Cover_Letter*.md
+
+# 交付件与构建链不入库（2026-11-10）
+# 00_SUBMIT 是投稿正文/投稿信/补充包的成品；tools 里是带本机绝对路径的构建脚本；
+# 回收站与整理产物无复用价值。仓库只保留可复现计算与出图的代码。
+# 2026-11-12：实际路径是仓库根的 00_SUBMIT/，早先写成 simulation/00_SUBMIT/ 一直没生效，
+# 一旦 git add . 就会把稿件和作者邮箱推上公开仓库。两条都留着，防止目录再挪回去。
+simulation/00_SUBMIT/
+00_SUBMIT/
+00_当前交付稿.md
+simulation/tools/
+simulation/Highlights_BE.md
+simulation/_trash_*/
+simulation/_backup/
+simulation/_archive/
+
+# 文件树快照（对账用，不入库）
+_snapshots/
