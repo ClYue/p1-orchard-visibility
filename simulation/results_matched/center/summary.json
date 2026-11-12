@@ -1,0 +1,55 @@
+{
+  "scene": "center",
+  "seeds": 30,
+  "matched_weight": 0.00101,
+  "fixed": {
+    "model": "fixed",
+    "angle": 0.0,
+    "radius": 2.0,
+    "heading": 0.3585385217396155,
+    "position": 0.035991480384757704,
+    "flight": 33.67142819170128,
+    "detection": 0.9920000000000007
+  },
+  "adaptive": {
+    "model": "lut",
+    "weight": 0.00101,
+    "heading": 0.45443474350730734,
+    "position": 0.020148341947989642,
+    "flight": 33.775866447595845,
+    "detection": 0.9186666666666669
+  },
+  "flight_gap_pct": 0.31016877365571405,
+  "paired_differences_lut_minus_fixed": {
+    "heading": {
+      "mean": 0.09589622176769173,
+      "lo": 0.07154134832506032,
+      "hi": 0.12126159107937766
+    },
+    "position": {
+      "mean": -0.01584313843676806,
+      "lo": -0.021722713026008172,
+      "hi": -0.01040783079065115
+    },
+    "flight": {
+      "mean": 0.1044382558945441,
+      "lo": -1.3351332337296302,
+      "hi": 1.6649688917618375
+    },
+    "detection": {
+      "mean": -0.07333333333333333,
+      "lo": -0.10080333333333334,
+      "hi": -0.05146666666666667
+    }
+  },
+  "frontier": {
+    "position": {
+      "needs_extra_travel": false,
+      "note": "already better at matched travel"
+    },
+    "heading": {
+      "needs_extra_travel": null,
+      "note": "not reached within the scanned weights"
+    }
+  }
+}

@@ -1,0 +1,1340 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="orchard">
+
+    <plugin filename="ignition-gazebo-physics-system"
+            name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-sensors-system"
+            name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system"
+            name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <!-- 自定义 world 不会自动加载 UserCommands；缺了它就没有 /world/<name>/set_pose，
+         只能靠重启 Gazebo 换站位，48 个站位会慢十倍 -->
+    <plugin filename="ignition-gazebo-user-commands-system"
+            name="ignition::gazebo::systems::UserCommands"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 30 0 0 0</pose>
+      <diffuse>0.95 0.95 0.95 1</diffuse>
+      <specular>0.05 0.05 0.05 1</specular>
+      <direction>-0.25 0.25 -1</direction>
+    </light>
+
+    <model name="ground">
+      <static>true</static>
+      <link name="link">
+        <collision name="c">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+        </collision>
+        <visual name="v">
+          <geometry><plane><normal>0 0 1</normal><size>200 200</size></plane></geometry>
+          <material>
+            <ambient>0.30 0.26 0.20 1</ambient>
+            <diffuse>0.30 0.26 0.20 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crown_0">
+      <static>true</static>
+      <pose>-3.980 -14.125 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_1">
+      <static>true</static>
+      <pose>-1.772 -14.013 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_2">
+      <static>true</static>
+      <pose>0.282 -14.208 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_3">
+      <static>true</static>
+      <pose>2.241 -14.133 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_4">
+      <static>true</static>
+      <pose>4.066 -14.331 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_5">
+      <static>true</static>
+      <pose>5.876 -13.669 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_6">
+      <static>true</static>
+      <pose>-9.980 -9.894 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_7">
+      <static>true</static>
+      <pose>-7.939 -9.901 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_8">
+      <static>true</static>
+      <pose>-5.771 -9.912 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_9">
+      <static>true</static>
+      <pose>-4.243 -10.226 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_10">
+      <static>true</static>
+      <pose>-2.138 -10.007 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_11">
+      <static>true</static>
+      <pose>-0.081 -10.052 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_12">
+      <static>true</static>
+      <pose>2.291 -9.950 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_13">
+      <static>true</static>
+      <pose>3.832 -10.100 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_14">
+      <static>true</static>
+      <pose>5.620 -9.817 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_15">
+      <static>true</static>
+      <pose>7.919 -9.915 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_16">
+      <static>true</static>
+      <pose>10.292 -10.301 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_17">
+      <static>true</static>
+      <pose>-11.919 -5.835 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_18">
+      <static>true</static>
+      <pose>-10.091 -6.012 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_19">
+      <static>true</static>
+      <pose>-7.943 -5.792 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_20">
+      <static>true</static>
+      <pose>-5.998 -6.089 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_21">
+      <static>true</static>
+      <pose>-4.120 -5.966 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_22">
+      <static>true</static>
+      <pose>-1.942 -6.065 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_23">
+      <static>true</static>
+      <pose>-0.086 -5.787 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_24">
+      <static>true</static>
+      <pose>2.063 -6.358 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_25">
+      <static>true</static>
+      <pose>3.870 -6.038 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_26">
+      <static>true</static>
+      <pose>6.260 -6.036 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_27">
+      <static>true</static>
+      <pose>7.587 -5.963 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_28">
+      <static>true</static>
+      <pose>10.225 -5.910 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_29">
+      <static>true</static>
+      <pose>11.996 -5.935 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_30">
+      <static>true</static>
+      <pose>-13.878 -1.898 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_31">
+      <static>true</static>
+      <pose>-12.035 -1.994 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_32">
+      <static>true</static>
+      <pose>-10.050 -2.422 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_33">
+      <static>true</static>
+      <pose>-7.849 -1.895 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_34">
+      <static>true</static>
+      <pose>-6.047 -1.833 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_35">
+      <static>true</static>
+      <pose>-4.119 -1.851 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_36">
+      <static>true</static>
+      <pose>-2.051 -1.790 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_37">
+      <static>true</static>
+      <pose>-0.292 -1.734 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_38">
+      <static>true</static>
+      <pose>2.053 -1.907 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_39">
+      <static>true</static>
+      <pose>3.895 -2.179 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_40">
+      <static>true</static>
+      <pose>5.938 -2.046 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_41">
+      <static>true</static>
+      <pose>8.196 -2.191 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_42">
+      <static>true</static>
+      <pose>9.881 -1.991 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_43">
+      <static>true</static>
+      <pose>12.245 -2.060 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_44">
+      <static>true</static>
+      <pose>13.962 -2.187 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_45">
+      <static>true</static>
+      <pose>-14.196 2.080 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_46">
+      <static>true</static>
+      <pose>-11.941 1.813 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_47">
+      <static>true</static>
+      <pose>-10.115 1.875 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_48">
+      <static>true</static>
+      <pose>-8.105 1.746 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_49">
+      <static>true</static>
+      <pose>-5.873 1.689 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_50">
+      <static>true</static>
+      <pose>-4.145 2.013 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_51">
+      <static>true</static>
+      <pose>-2.202 1.928 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_52">
+      <static>true</static>
+      <pose>0.094 1.875 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_53">
+      <static>true</static>
+      <pose>1.674 2.043 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_54">
+      <static>true</static>
+      <pose>3.981 2.241 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_55">
+      <static>true</static>
+      <pose>5.823 2.046 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_56">
+      <static>true</static>
+      <pose>7.938 1.894 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_57">
+      <static>true</static>
+      <pose>10.044 2.151 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_58">
+      <static>true</static>
+      <pose>11.746 1.757 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_59">
+      <static>true</static>
+      <pose>13.775 2.007 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_60">
+      <static>true</static>
+      <pose>-11.990 5.820 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_61">
+      <static>true</static>
+      <pose>-10.070 6.076 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_62">
+      <static>true</static>
+      <pose>-8.118 6.242 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_63">
+      <static>true</static>
+      <pose>-6.055 6.343 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_64">
+      <static>true</static>
+      <pose>-3.850 6.138 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_65">
+      <static>true</static>
+      <pose>-1.784 6.102 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_66">
+      <static>true</static>
+      <pose>-0.138 6.235 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_67">
+      <static>true</static>
+      <pose>2.101 5.748 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_68">
+      <static>true</static>
+      <pose>3.879 5.842 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_69">
+      <static>true</static>
+      <pose>6.225 6.220 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_70">
+      <static>true</static>
+      <pose>7.732 5.840 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_71">
+      <static>true</static>
+      <pose>9.746 6.170 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_72">
+      <static>true</static>
+      <pose>11.803 5.873 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_73">
+      <static>true</static>
+      <pose>-10.175 10.136 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_74">
+      <static>true</static>
+      <pose>-7.969 9.966 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_75">
+      <static>true</static>
+      <pose>-6.143 10.173 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_76">
+      <static>true</static>
+      <pose>-3.953 9.893 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_77">
+      <static>true</static>
+      <pose>-2.174 10.105 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_78">
+      <static>true</static>
+      <pose>0.141 9.951 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_79">
+      <static>true</static>
+      <pose>2.126 9.801 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_80">
+      <static>true</static>
+      <pose>4.023 10.173 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_81">
+      <static>true</static>
+      <pose>6.016 9.891 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_82">
+      <static>true</static>
+      <pose>8.281 9.950 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_83">
+      <static>true</static>
+      <pose>9.884 10.039 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_84">
+      <static>true</static>
+      <pose>-3.591 14.123 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_85">
+      <static>true</static>
+      <pose>-1.984 14.051 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_86">
+      <static>true</static>
+      <pose>-0.032 13.947 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_87">
+      <static>true</static>
+      <pose>2.013 13.938 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="crown_88">
+      <static>true</static>
+      <pose>4.121 13.931 2.000 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><ellipsoid><radii>1.2 1.2 1.5</radii></ellipsoid></geometry>
+          <material>
+            <ambient>0.05 0.28 0.05 1</ambient>
+            <diffuse>0.05 0.28 0.05 1</diffuse>
+            <specular>0.02 0.02 0.02 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="marker_0">
+      <static>true</static>
+      <pose>-0.500 0.000 0.300 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><sphere><radius>0.09</radius></sphere></geometry>
+          <material>
+            <ambient>1 0 1 1</ambient>
+            <diffuse>1 0 1 1</diffuse>
+            <specular>0 0 0 1</specular>
+            <emissive>1 0 1 1</emissive>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="marker_1">
+      <static>true</static>
+      <pose>0.500 0.000 0.300 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><sphere><radius>0.09</radius></sphere></geometry>
+          <material>
+            <ambient>1 0 1 1</ambient>
+            <diffuse>1 0 1 1</diffuse>
+            <specular>0 0 0 1</specular>
+            <emissive>1 0 1 1</emissive>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="uav">
+      <static>true</static>
+      <pose>2.000 0.000 6.000 0.0000 1.2333 -3.1416</pose>
+      <link name="link">
+        <sensor name="cam" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <always_on>1</always_on>
+          <update_rate>10</update_rate>
+          <visualize>false</visualize>
+          <camera>
+            <horizontal_fov>2.094395</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.05</near><far>200</far></clip>
+          </camera>
+          <topic>cam/image</topic>
+        </sensor>
+      </link>
+    </model>
+
+  </world>
+</sdf>

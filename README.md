@@ -1,17 +1,18 @@
-# Canopy Visibility Constrains UAV Viewpoint Selection
+# Ground Paths Decide Which UAV Viewpoint Is Best in Orchard Localisation
 
 Code and data accompanying the manuscript:
 
-> **Canopy Visibility Constrains UAV Viewpoint Selection: A Simulation Study in Orchards**
-> Chunlong Yue, Qian Li, Junyi Zhang, Kaikai Zhou, Bo Peng
-> College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou, China
+> **Ground Paths Decide Which UAV Viewpoint Is Best in Orchard Localisation**
+> Chunlong Yue, Qian Li, Junyi Zhang
+> College of Energy and Intelligent Engineering, Henan University of Animal Husbandry and Economy, Zhengzhou 450000, China
 
 ## Repository layout
 
-| Directory | Contents |
+| Path | Contents |
 |---|---|
-| `simulation/` | **The current version.** Simulation, plotting code, calibrated priors, seed-level results, figures, and the manuscript. This is what the paper reports. |
-
+| `simulation/` | Simulation, plotting code, calibrated priors, seed-level results, figures, and the Gazebo validation. This is what the paper reports. |
+| `00_SUBMIT/` | Submission package: `1_上传/` (manuscript, cover letter, supplement), `2_核对/` (preview PDFs, Chinese translation), `3_核查记录/` (template and audit records). |
+| `refs/` | Reference library: BibTeX, RIS and the metadata used to build the reference list. |
 
 ## Quick start
 
@@ -22,7 +23,7 @@ python run_study.py          # Recomputes the 50 s main study
 python plot_publication.py   # Regenerates Figures 1–4 from the saved data
 ```
 
-The [simulation README](simulation/README.md) lists the commands for the trial-length and crown-width cases.
+The [simulation README](simulation/README.md) lists the commands for the trial-length and crown-width cases, the Gazebo visibility check, and the sensitivity runs.
 
 ## What the first version got wrong
 

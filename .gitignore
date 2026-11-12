@@ -54,3 +54,9 @@ simulation/_archive/
 
 # 文件树快照（对账用，不入库）
 _snapshots/
+
+# 中文译稿源：逐段拆开的论文正文，按"稿件不入库"处理（2026-11-12）
+simulation/报告/中文译稿源/
+# 稿件中间产物与第三方论文全文：一律不入公开仓库（2026-11-12）
+simulation/报告/_en_manuscript_*.md
+simulation/报告/_styleref/*.txt

@@ -10,6 +10,8 @@ import numpy as np
 DT = 0.2
 STEPS = 250
 SPEED = 3.0
+POS_WEIGHT = 0.2   # position SD expressed in heading SD units: 1 m ~ 0.2 rad
+EXTINCTION = 1.0   # canopy extinction coefficient k, m^-1
 BEARING_SD = 0.008
 HALF_FOV_RADIUS = 5.7 * np.tan(np.deg2rad(60))
 MIN_MARKER_RADIUS = 0.35  # Mask the nadir singularity of the azimuth-only model.
@@ -71,7 +73,7 @@ def pair_probability(uav, marker_xy, trees):
     lo = np.clip((-b - root) / a, 0, 1)
     hi = np.clip((-b + root) / a, 0, 1)
     length = np.linalg.norm(ray, axis=-1) * np.sum(hi - lo, axis=-1)
-    return np.exp(-np.sum(length, axis=-1))
+    return np.exp(-EXTINCTION * np.sum(length, axis=-1))
 
 
 def prior(offset):
@@ -116,10 +118,12 @@ def camera_gate(distance):
     return np.all((distance >= MIN_MARKER_RADIUS) & (distance <= HALF_FOV_RADIUS), axis=-1)
 
 
-def choose(estimate, covariance, uav, lut, fit, model, weight):
-    # Evaluate positions reachable within one second and allow the UAV to stay.
+def choose(estimate, covariance, uav, lut, fit, model, weight, horizon=1):
+    # Candidates reachable within `horizon` seconds. horizon=1 reproduces the
+    # original one-second look-ahead; a longer horizon lets the policy request
+    # the wider radii (4.5, 6.5, 9, 12 m) that the 3 m/s speed cap otherwise clamps.
     requested = estimate[:, None, :2] + OFFSETS
-    reachable = move(uav[:, None, :], requested, SPEED)
+    reachable = move(uav[:, None, :], requested, SPEED * horizon)
     candidate = np.concatenate((reachable, uav[:, None, :]), axis=1)
     relative = candidate - estimate[:, None, :2]
     pv = interpolate(lut, relative)
@@ -136,13 +140,16 @@ def choose(estimate, covariance, uav, lut, fit, model, weight):
     reduction = pht @ np.linalg.solve(innovation, np.swapaxes(pht, -1, -2))
     expected = p - pv[..., None, None] * reduction
     sd = np.sqrt(np.maximum(0, np.diagonal(expected, axis1=-2, axis2=-1)))
-    cost = (sd[..., 2] + 0.2 * np.hypot(sd[..., 0], sd[..., 1])
+    cost = (sd[..., 2] + POS_WEIGHT * np.hypot(sd[..., 0], sd[..., 1])
             + weight[:, None] * np.linalg.norm(candidate - uav[:, None, :], axis=-1))
     return candidate[np.arange(len(estimate)), cost.argmin(axis=1)]
 
 
-def run_scene(offset, seeds):
-    lut, fit, r2 = prior(offset)
+def run_scene(offset, seeds, horizon=1, prior_offset=None, seed_offset=0):
+    # prior_offset 只影响规划器拿到的可见性表，不改地面路径（offset）。
+    # 两者不等即"信念与事实不符"：规划器按错误走廊建模，评估仍按真实几何。
+    # seed_offset 只平移三条随机流的起点：默认 0 复现主实验，非 0 用于新种子确认。
+    lut, fit, r2 = prior(offset if prior_offset is None else prior_offset)
     fixed = [("fixed", float(angle), float(radius), 0.0)
              for angle in range(0, 360, 45) for radius in RADII]
     active = [(model, 0., 0., weight)
@@ -155,10 +162,11 @@ def run_scene(offset, seeds):
     fixed_radius = config[~is_active, 2].astype(float)
     fixed_angle = np.deg2rad(config[~is_active, 1].astype(float))
     weight = config[is_active, 3].astype(float)
-    trees = np.stack([orchard(np.random.default_rng(10000 + s)) for s in range(seeds)])
-    noise = np.stack([np.random.default_rng(20000 + s).standard_normal((STEPS + 1, 7))
+    trees = np.stack([orchard(np.random.default_rng(10000 + seed_offset + s))
+                      for s in range(seeds)])
+    noise = np.stack([np.random.default_rng(20000 + seed_offset + s).standard_normal((STEPS + 1, 7))
                       for s in range(seeds)], axis=1)
-    uniform = np.stack([np.random.default_rng(30000 + s).random(STEPS)
+    uniform = np.stack([np.random.default_rng(30000 + seed_offset + s).random(STEPS)
                         for s in range(seeds)], axis=1)
     t = np.arange(STEPS + 1) * DT
     x = 0.6 * t
@@ -182,7 +190,8 @@ def run_scene(offset, seeds):
             target[~is_active] = estimate[~is_active, :2] + fixed_radius[:, None] * np.stack(
                 (np.cos(angle), np.sin(angle)), axis=-1)
             target[is_active] = choose(estimate[is_active], covariance[is_active],
-                                       uav[is_active], lut, fit, config[is_active, 0], weight)
+                                       uav[is_active], lut, fit, config[is_active, 0], weight,
+                                       horizon)
         next_uav = move(uav, target, SPEED * DT)
         step = np.linalg.norm(next_uav - uav, axis=-1)
         assert np.max(step) <= SPEED * DT + 1e-10
@@ -242,11 +251,23 @@ def run_scene(offset, seeds):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seeds", type=int, default=30)
+    parser.add_argument("--horizon", type=float, default=1.0,
+                       help="look-ahead in seconds for the adaptive policy; 1 = the "
+                            "original one-second look-ahead, 4 reaches the 12 m radius")
+    parser.add_argument("--pos-weight", type=float, default=0.2,
+                       help="weight of the position SD (metres) relative to the heading "
+                            "SD (radians) in the policy cost; default 0.2")
+    parser.add_argument("--speed", type=float, default=3.0,
+                       help="UAV speed in m/s; default 3.0")
+    parser.add_argument("--extinction", type=float, default=1.0,
+                       help="canopy extinction coefficient k in 1/m; default 1.0")
     parser.add_argument("--crown-b", type=float, default=None,
                        help="across-row crown semi-axis in metres (default 1.2)")
     parser.add_argument("--steps", type=int, default=None,
                        help="override STEPS; 250 = 50 s, 750 = 150 s")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parent / "results")
+    parser.add_argument("--seed-offset", type=int, default=0,
+                        help="shift the three random streams; 0 reproduces the main study")
     args = parser.parse_args()
     if args.crown_b is not None:
         globals()["CROWN_B"] = args.crown_b
@@ -255,13 +276,27 @@ def main():
         globals()["X_EXTENT"] = max(50.0, 0.6 * args.steps * DT + 10.0)
     if args.seeds < 1:
         parser.error("--seeds must be positive")
+    if args.horizon < 1:
+        parser.error("--horizon must be >= 1 s")
+    if args.pos_weight <= 0:
+        parser.error("--pos-weight must be positive")
+    if args.speed <= 0:
+        parser.error("--speed must be positive")
+    if args.extinction <= 0:
+        parser.error("--extinction must be positive")
+    globals()["POS_WEIGHT"] = args.pos_weight
+    globals()["SPEED"] = args.speed
+    globals()["EXTINCTION"] = args.extinction
     args.output.mkdir(parents=True, exist_ok=True)
-    study = dict(seeds=args.seeds, dt=DT, steps=STEPS,
+    study = dict(seeds=args.seeds, seed_offset=args.seed_offset, dt=DT, steps=STEPS,
+                 horizon=args.horizon,
+                 pos_weight=POS_WEIGHT, speed=SPEED, extinction=EXTINCTION,
                  columns=["position_rmse_m", "heading_rmse_deg", "flight_m",
                           "detection_fraction", "mean_pair_probability"], scenes={})
     maps = {}
     for name, offset in SCENES.items():
-        study["scenes"][name], maps[name] = run_scene(offset, args.seeds)
+        study["scenes"][name], maps[name] = run_scene(
+            offset, args.seeds, args.horizon, seed_offset=args.seed_offset)
         print(f"{name}: completed {len(study['scenes'][name]['results'])} policies", flush=True)
     (args.output / "study.json").write_text(json.dumps(study, indent=2) + "\n", encoding="utf-8")
     np.savez_compressed(args.output / "priors.npz", grid=GRID, **maps)

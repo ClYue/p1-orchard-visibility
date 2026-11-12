@@ -1,6 +1,24 @@
 # P1 simulation package
 
-This package accompanies *Canopy Visibility Constrains UAV Viewpoint Selection: A Simulation Study in Orchards*. It compares 48 fixed stations and 12 adaptive configurations in two orchard scenarios, with 30 paired seeds per scenario.
+This package accompanies *Ground Paths Decide Which UAV Viewpoint Is Best in Orchard Localisation*. It compares 48 fixed stations and 12 adaptive configurations in two orchard scenarios, with 30 paired seeds per scenario.
+
+## Package layout
+
+| Path | Contents |
+|---|---|
+| `run_study.py` | simulation and estimator; writes one results folder per run |
+| `plot_publication.py` | Figures 1–4, written to `figures/` |
+| `gazebo/` | Gazebo rebuilt orchard, rendering, validation (Figure 5) |
+| `results*/` | simulation output: `study.json` plus `priors.npz` |
+| `figures/` | rendered Figure 1–5 as PNG and vector PDF |
+| `tools/` | build, audit, preview export, reference check and tree-snapshot scripts |
+| `../00_SUBMIT/` | the submission package (project root, next to `simulation/`): `1_上传/` to upload, `2_核对/` previews, `3_核查记录/` audit records |
+| `报告/` | experiment and review reports (Chinese) |
+
+`../00_SUBMIT/` is only meaningful for submission. Rebuilding it requires Word and
+`pywin32`; the scripts pass a single docx through XML-level edits rather than
+regenerating it, because the manuscript contains 134 OMML equations and the
+MDPI style set.
 
 ## Reproduce Figures 1–4
 
@@ -12,6 +30,24 @@ python plot_publication.py --output figures
 ~~~
 
 The plotting script writes 600 dpi PNG and vector PDF files. The supplied captions identify the plotted quantities and uncertainty intervals.
+
+## Reproduce the Gazebo visibility check (Section 3.5)
+
+The `gazebo/` scripts rebuild the orchard in Gazebo Sim 6.18 and compare rendered
+marker visibility with the model's predicted transmittance.
+
+~~~sh
+cd gazebo
+python make_world.py                 # writes orchard.sdf and sites.json
+python render_sites.py --out shots   # 48 stations, one image each
+python analyze.py --shots shots --csv visibility_gazebo.csv
+python plot_validation.py            # Figure 5
+~~~
+
+`render_sites.py` needs Gazebo Sim with the `ogre` rendering engine and, on WSL,
+`DISPLAY=:0`. No ROS installation is required: frames are read through
+`ign topic --json-output`. `analyze.py` imports `run_study.py` from the parent
+directory for the model's transmittance function.
 
 ## Recompute the simulation results
 
