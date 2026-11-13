@@ -46,7 +46,12 @@ simulation/_archive/Cover_Letter*.md
 simulation/00_SUBMIT/
 00_SUBMIT/
 00_当前交付稿.md
-simulation/tools/
+simulation/tools/*
+# 三个数据脚本属于复现链：Data Availability 指向本仓库，缺了它们复现就断在半路。
+# 其余 tools/ 是带本机绝对路径的构建脚本，仍然不入库。
+!simulation/tools/matched_distance.py
+!simulation/tools/path_offset.py
+!simulation/tools/fresh_seed_check.py
 simulation/Highlights_BE.md
 simulation/_trash_*/
 simulation/_backup/
