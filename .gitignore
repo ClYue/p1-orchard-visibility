@@ -52,6 +52,9 @@ simulation/tools/*
 !simulation/tools/matched_distance.py
 !simulation/tools/path_offset.py
 !simulation/tools/fresh_seed_check.py
+!simulation/tools/mismatched_prior.py
+!simulation/tools/uav_noise_sensitivity.py
+!simulation/tools/shifted_gaussian_ablation.py
 simulation/Highlights_BE.md
 simulation/_trash_*/
 simulation/_backup/

@@ -57,6 +57,13 @@ python run_study.py --seeds 30 --steps 750 --output results_sensitivity_150s
 python run_study.py --seeds 30 --crown-b 1.5 --output results_crown_b1.5
 python run_study.py --seeds 30 --crown-b 1.8 --output results_crown_b1.8
 python run_study.py --seeds 30 --crown-b 2.0 --output results_crown_b2.0
+python tools/matched_distance.py
+python tools/path_offset.py
+python tools/fresh_seed_check.py
+python tools/mismatched_prior.py --path edge --belief center --seeds 30
+python tools/mismatched_prior.py --path center --belief edge --seeds 30
+python tools/uav_noise_sensitivity.py
+python tools/shifted_gaussian_ablation.py
 ~~~
 
 Each results folder contains a JSON file with column definitions, configuration means, and seed-level values. It also contains an NPZ file with the grid and lookup tables before the camera gate. Seed order is shared within each case. In the vehicle frame 0° is forward, 180° is rearward, and positive angles are counterclockwise.
